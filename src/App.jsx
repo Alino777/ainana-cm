@@ -340,8 +340,9 @@ function GaugeChart({ value, color, label }) {
   );
 }
 
+
 // =================================================================
-// --- VISTA DETTAGLIO CLIENTE (CON LAYOUT FINALE) ---
+// --- VISTA DETTAGLIO CLIENTE (CON LAYOUT PROFILO AGGIORNATO) ---
 // =================================================================
 function ClientDetailView({ client, onBack }) {
   const weightData = [
@@ -372,26 +373,35 @@ function ClientDetailView({ client, onBack }) {
               
               {/* --- COLONNA SINISTRA --- */}
               <div className="flex flex-col gap-6">
-                  {/* Card Profilo Dettagliata */}
-                  <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col items-center text-center">
-                      <img src={client.avatar} alt={client.name} className="w-28 h-28 rounded-full object-cover mb-4" />
-                      <h2 className="text-2xl font-bold">{client.name}</h2>
-                      <p className="text-gray-500 mb-4">{client.age} anni - {client.location}</p>
-                      <div className="flex flex-wrap justify-center gap-2 my-4">
-                          <span className="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1.5 rounded-full">{client.weightChange}</span>
-                          <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1.5 rounded-full">Prossima visita: {client.nextVisit}</span>
-                          <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">{client.dietType}</span>
-                          <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">Massa grassa: {client.details.fatMass}</span>
-                          <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">Altezza: {client.details.height}</span>
+                  {/* Card Profilo Dettagliata - AGGIORNATA CON LAYOUT FLEXBOX */}
+                  <div className="bg-white rounded-2xl p-6 shadow-sm">
+                      <div className="flex items-start gap-5">
+                          {/* Avatar a sinistra */}
+                          <img src={client.avatar} alt={client.name} className="w-24 h-24 rounded-full object-cover flex-shrink-0" />
+                          
+                          {/* Blocco info a destra */}
+                          <div className="flex-grow">
+                              <h2 className="text-2xl font-bold text-left">{client.name}</h2>
+                              <p className="text-gray-500 text-left mb-4">{client.age} anni - {client.location}</p>
+                              <div className="flex flex-wrap justify-start gap-2">
+                                  <span className="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1.5 rounded-full">{client.weightChange}</span>
+                                  <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1.5 rounded-full">Prossima visita: {client.nextVisit}</span>
+                                  <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">{client.dietType}</span>
+                                  <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">Massa grassa: {client.details.fatMass}</span>
+                                  <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">Altezza: {client.details.height}</span>
+                              </div>
+                          </div>
                       </div>
-                      <button className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 shadow-md">
-                         <ChatIcon />
-                      </button>
+                      {/* Pulsante chat in basso a destra */}
+                      <div className="flex justify-end mt-4">
+                          <button className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 shadow-md">
+                             <ChatIcon />
+                          </button>
+                      </div>
                   </div>
 
-                  {/* --- CONTENITORE PER SODDISFAZIONE E BENESSERE AFFIANCATI --- */}
+                  {/* Contenitore per Soddisfazione e Benessere affiancati */}
                   <div className="grid grid-cols-2 gap-6">
-                      {/* Card Livello di Soddisfazione */}
                       <div className="bg-white rounded-2xl p-4 shadow-sm text-center">
                           <h3 className="font-bold mb-2 text-sm">Soddisfazione</h3>
                           <GaugeChart value={client.details.satisfaction} color="#FF7300" label="Del suo percorso" />
@@ -399,7 +409,6 @@ function ClientDetailView({ client, onBack }) {
                               <button className="text-xs text-gray-500 font-semibold hover:underline">Dettagli</button>
                           </div>
                       </div>
-                      {/* Card Livello di Benessere */}
                       <div className="bg-white rounded-2xl p-4 shadow-sm text-center">
                           <h3 className="font-bold mb-2 text-sm">Benessere</h3>
                           <GaugeChart value={client.details.wellness} color="#FFC107" label="Buono" />
@@ -480,6 +489,7 @@ function ClientDetailView({ client, onBack }) {
       </div>
   )
 }
+
 // =================================================================
 // --- VISTA DASHBOARD COMPLETA (CORRETTA E VERIFICATA) ---
 // =================================================================
