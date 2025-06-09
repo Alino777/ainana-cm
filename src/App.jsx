@@ -226,31 +226,52 @@ export default function App() {
 }
 
 // =================================================================
-// --- VISTA CLIENT MANAGEMENT (AGGIORNATA) ---
+// --- VISTA CLIENT MANAGEMENT (CON FILTRO FUNZIONANTE) ---
 // =================================================================
 function ClientManagementView() {
-    const [selectedClient, setSelectedClient] = useState(null);
+  const [selectedClient, setSelectedClient] = useState(null);
+  // 1. Aggiungiamo uno stato per memorizzare il testo della ricerca
+  const [searchTerm, setSearchTerm] = useState("");
 
-    if (selectedClient) {
-        return <ClientDetailView client={selectedClient} onBack={() => setSelectedClient(null)} />
-    }
-    
-    return (
-        <div>
-            {/* --- PULSANTE FILTRI (RI-AGGIUNTO) --- */}
-            <div className="flex justify-end mb-6">
-                <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">
-                    Filtri: ultimi lead
-                    <FilterIcon />
-                </button>
-            </div>
-             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {clients.map(client => (
-                    <ClientCard key={client.id} client={client} onClick={() => setSelectedClient(client)} />
-                ))}
-            </div>
-        </div>
-    )
+  // Se un cliente è selezionato, mostra la sua pagina di dettaglio
+  if (selectedClient) {
+      return <ClientDetailView client={selectedClient} onBack={() => setSelectedClient(null)} />
+  }
+  
+  // 2. Filtriamo la lista dei clienti in base al termine di ricerca
+  // La ricerca è case-insensitive e controlla sia il nome che la località.
+  const filteredClients = clients.filter(client => 
+      client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      client.location.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  // Altrimenti, mostra la griglia dei clienti (filtrata)
+  return (
+      <div>
+          {/* 3. Sostituiamo il vecchio pulsante con una barra di ricerca funzionale */}
+          <div className="flex justify-end mb-6">
+              <div className="relative w-full max-w-xs">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <SearchIcon />
+                  </div>
+                  <input 
+                      type="text"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      placeholder="Cerca per nome o località..."
+                      className="w-full pl-10 pr-4 py-2 text-sm font-semibold text-gray-700 bg-white rounded-lg shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  />
+              </div>
+          </div>
+
+           {/* 4. Usiamo la lista filtrata per mostrare le card */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {filteredClients.map(client => (
+                  <ClientCard key={client.id} client={client} onClick={() => setSelectedClient(client)} />
+              ))}
+          </div>
+      </div>
+  )
 }
 
 function ClientCard({ client, onClick }) {
