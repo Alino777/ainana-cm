@@ -461,7 +461,11 @@ function GaugeChart({ value, color, label }) {
 // =================================================================
 // --- VISTA DASHBOARD COMPLETA (CORRETTA E VERIFICATA) ---
 // =================================================================
+// =================================================================
+// --- VISTA DASHBOARD (PULITA E CORRETTA) ---
+// =================================================================
 function DashboardView({ user }) {
+  // Stati e funzioni del calendario
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [appointments, setAppointments] = useState({[new Date().toDateString()]: ["10:00: prima visita Mario Rossi"]});
   const [newAppt, setNewAppt] = useState("");
