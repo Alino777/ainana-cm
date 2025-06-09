@@ -159,13 +159,11 @@ const clients = [
 ];
 
 
-
 // --- COMPONENTI ICONA ---
 const SearchIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>);
 const BackIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>);
 const ChatIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>);
-const ChevronDownIcon = () => (<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>);
-// --- ICONA FILTRO (RI-AGGIUNTA) ---
+const ChevronDownIcon = () => (<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"></path></svg>);
 const FilterIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>);
 
 
@@ -212,9 +210,9 @@ export default function App() {
       </nav>
       
       <main>
-  {/* {activeSection === 'dashboard' && <DashboardView user={user} />} */}
-  {activeSection === 'client' && <ClientManagementView />}
-</main>
+        {activeSection === 'dashboard' && <DashboardView user={user} />}
+        {activeSection === 'client' && <ClientManagementView />}
+      </main>
       
       <div className="fixed bottom-6 right-6 bg-yellow-400 text-black font-semibold px-5 py-3 rounded-full shadow-lg flex items-center gap-3">
         <span>💬</span>
@@ -226,52 +224,45 @@ export default function App() {
 }
 
 // =================================================================
-// --- VISTA CLIENT MANAGEMENT (CON FILTRO FUNZIONANTE) ---
+// --- VISTA GESTIONE CLIENTI ---
 // =================================================================
 function ClientManagementView() {
-  const [selectedClient, setSelectedClient] = useState(null);
-  // 1. Aggiungiamo uno stato per memorizzare il testo della ricerca
-  const [searchTerm, setSearchTerm] = useState("");
+    const [selectedClient, setSelectedClient] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
 
-  // Se un cliente è selezionato, mostra la sua pagina di dettaglio
-  if (selectedClient) {
-      return <ClientDetailView client={selectedClient} onBack={() => setSelectedClient(null)} />
-  }
-  
-  // 2. Filtriamo la lista dei clienti in base al termine di ricerca
-  // La ricerca è case-insensitive e controlla sia il nome che la località.
-  const filteredClients = clients.filter(client => 
-      client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      client.location.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-  
-  // Altrimenti, mostra la griglia dei clienti (filtrata)
-  return (
-      <div>
-          {/* 3. Sostituiamo il vecchio pulsante con una barra di ricerca funzionale */}
-          <div className="flex justify-end mb-6">
-              <div className="relative w-full max-w-xs">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <SearchIcon />
-                  </div>
-                  <input 
-                      type="text"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      placeholder="Cerca per nome o località..."
-                      className="w-full pl-10 pr-4 py-2 text-sm font-semibold text-gray-700 bg-white rounded-lg shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                  />
-              </div>
-          </div>
+    if (selectedClient) {
+        return <ClientDetailView client={selectedClient} onBack={() => setSelectedClient(null)} />
+    }
+    
+    const filteredClients = clients.filter(client => 
+        client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        client.location.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+    return (
+        <div>
+            <div className="flex justify-end mb-6">
+                <div className="relative w-full max-w-xs">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <SearchIcon />
+                    </div>
+                    <input 
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Cerca per nome o località..."
+                        className="w-full pl-10 pr-4 py-2 text-sm font-semibold text-gray-700 bg-white rounded-lg shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    />
+                </div>
+            </div>
 
-           {/* 4. Usiamo la lista filtrata per mostrare le card */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {filteredClients.map(client => (
-                  <ClientCard key={client.id} client={client} onClick={() => setSelectedClient(client)} />
-              ))}
-          </div>
-      </div>
-  )
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {filteredClients.map(client => (
+                    <ClientCard key={client.id} client={client} onClick={() => setSelectedClient(client)} />
+                ))}
+            </div>
+        </div>
+    )
 }
 
 function ClientCard({ client, onClick }) {
@@ -291,152 +282,43 @@ function ClientCard({ client, onClick }) {
         </div>
     )
 }
+
 // =================================================================
-// --- VISTA DETTAGLIO CLIENTE (CON ACCORDION FUNZIONANTE) ---
+// --- COMPONENTE PER L'ACCORDION DEI PASTI ---
 // =================================================================
-function ClientDetailView({ client, onBack }) {
-  const weightData = [
-      { name: 'Gen', kg: 0 }, { name: 'Feb', kg: -1.5 }, { name: 'Mar', kg: -2.2 },
-      { name: 'Apr', kg: -3 }, { name: 'Mag', kg: -4 }, { name: 'Giu', kg: -3.8 },
-      { name: 'Lug', kg: -3.2 }, { name: 'Ago', kg: -2.5 },
-  ];
-  
-  // Stato per gestire quale sezione dell'accordion è aperta
-  const [openMeal, setOpenMeal] = useState('spuntini'); // Default: apri "spuntini"
-
-  const handleMealClick = (meal) => {
-      // Se clicco su una sezione già aperta, la chiudo. Altrimenti, la apro.
-      setOpenMeal(openMeal === meal ? null : meal);
-  };
-
-  return(
-      <div className="flex flex-col gap-6">
-          <div className="flex justify-between items-center">
-               <button onClick={onBack} className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">
-                  <BackIcon />
-                  Tutti i clienti
-              </button>
-              <button className="text-sm font-semibold text-black bg-yellow-300 px-4 py-2 rounded-lg shadow-sm hover:bg-yellow-400">
-                  Modifica widget
-              </button>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Colonna Sinistra */}
-              <div className="lg:col-span-1 flex flex-col gap-6">
-                  {/* Card Profilo Dettagliata */}
-                  <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col items-center text-center">
-                      <img src={client.avatar} alt={client.name} className="w-28 h-28 rounded-full object-cover mb-4" />
-                      <h2 className="text-2xl font-bold">{client.name}</h2>
-                      <p className="text-gray-500 mb-4">{client.age} anni - {client.location}</p>
-                      <div className="flex flex-wrap justify-center gap-2 my-4">
-                          <span className="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1.5 rounded-full">{client.weightChange}</span>
-                          <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1.5 rounded-full">Prossima visita: {client.nextVisit}</span>
-                          <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">{client.dietType}</span>
-                          <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">Massa grassa: {client.details.fatMass}</span>
-                          <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">Altezza: {client.details.height}</span>
-                      </div>
-                      <button className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 shadow-md">
-                         <ChatIcon />
-                      </button>
-                  </div>
-
-                  {/* Card Livello di Soddisfazione */}
-                  <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h3 className="font-bold mb-4">Livello di soddisfazione</h3>
-                      <GaugeChart value={client.details.satisfaction} color="#FF7300" label="Soddisfatta del suo percorso" />
-                      <div className="text-center mt-4">
-                          <button className="text-sm text-gray-600 font-semibold hover:underline">Dettagli</button>
-                      </div>
-                  </div>
-                   {/* Card Livello di Benessere */}
-                   <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h3 className="font-bold mb-4">Livello di benessere</h3>
-                      <GaugeChart value={client.details.wellness} color="#FFC107" label="Buono" />
-                       <div className="text-center mt-4">
-                          <button className="text-sm text-gray-600 font-semibold hover:underline">Dettagli</button>
-                      </div>
-                   </div>
-              </div>
-
-              {/* Colonna Destra */}
-              <div className="lg:col-span-2 flex flex-col gap-6">
-                  {/* Card Grafico Peso */}
-                  <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h3 className="font-bold mb-2">Andamento peso corporeo</h3>
-                      <ResponsiveContainer width="100%" height={250}>
-                           <AreaChart data={weightData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
-                              <defs>
-                                  <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="5%" stopColor="#FF7300" stopOpacity={0.4}/>
-                                  <stop offset="95%" stopColor="#FF7300" stopOpacity={0}/>
-                                  </linearGradient>
-                              </defs>
-                              <XAxis dataKey="name" stroke="#b0b0b0" fontSize={12} />
-                              <YAxis stroke="#b0b0b0" fontSize={12} />
-                              <Tooltip />
-                              <Area type="monotone" dataKey="kg" stroke="#FF7300" strokeWidth={3} fill="url(#colorWeight)" />
-                           </AreaChart>
-                      </ResponsiveContainer>
-                  </div>
-                  {/* Card Aderenza Pasti - AGGIORNATA CON LOGICA ACCORDION */}
-                   <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h3 className="font-bold mb-4">Aderenza ai pasti</h3>
-                      <div className="space-y-2">
-                          {Object.entries(client.details.adherence).map(([meal, value]) => (
-                              <AdherenceItem
-                                  key={meal}
-                                  meal={meal}
-                                  value={value}
-                                  isOpen={openMeal === meal}
-                                  onClick={() => handleMealClick(meal)}
-                              />
-                          ))}
-                      </div>
-                   </div>
-              </div>
-
-
-              {/* --- NUOVA RIGA INFERIORE CON I WIDGET MANCANTI --- */}
-              <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Card Biomarcatori */}
-                   <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h3 className="font-bold mb-4">Biomarcatori</h3>
-                       <div className="space-y-4">
-                          <div>
-                              <div className="flex justify-between text-sm mb-1 font-semibold"><span>Microbioma</span><span>Buono</span></div>
-                              <div className="w-full bg-gray-200 rounded-full h-2.5"><div className="bg-green-500 h-2.5 rounded-full" style={{ width: `85%` }}></div></div>
-                          </div>
-                           <div>
-                              <div className="flex justify-between text-sm mb-1 font-semibold"><span>Indice-glicemico</span><span>Media</span></div>
-                              <div className="w-full bg-gray-200 rounded-full h-2.5"><div className="bg-yellow-500 h-2.5 rounded-full" style={{ width: `55%` }}></div></div>
-                          </div>
-                       </div>
-                  </div>
-                  {/* Card Età Biologica */}
-                   <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h3 className="font-bold mb-4">Età biologica</h3>
-                      <div className="space-y-3">
-                         <div>
-                              <p className="text-sm font-semibold">Età anagrafica</p>
-                              <div className="w-full bg-gray-200 rounded-lg h-6 flex items-center px-2 text-sm">{client.age} anni</div>
-                         </div>
-                          <div>
-                              <p className="text-sm font-semibold">Età biologica</p>
-                              <div className="bg-green-200 rounded-lg h-6 flex items-center px-2 text-sm text-green-800 font-semibold" style={{width: `${(client.details.biologicalAge / client.age) * 100}%`}}>{client.details.biologicalAge} anni</div>
-                         </div>
-                      </div>
-                       <p className="text-xs text-gray-500 mt-4">In base allo stile attuale, l'età biologica del paziente è di {client.details.biologicalAge} anni &gt;</p>
-                   </div>
-              </div>
-
-          </div>
-      </div>
-  )
+function AdherenceItem({ meal, value, isOpen, onClick }) {
+    return (
+        <div>
+            <div onClick={onClick} className="flex justify-between items-center text-sm mb-1 cursor-pointer p-2 rounded-lg hover:bg-gray-50">
+                <span className="font-semibold capitalize">{meal}</span>
+                <span className="text-gray-500 flex items-center gap-2">
+                    {value}% 
+                    <span className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                        <ChevronDownIcon />
+                    </span>
+                </span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div className="bg-green-500 h-2.5 rounded-full" style={{ width: `${value}%` }}></div>
+            </div>
+            {isOpen && (
+                <div className="mt-2 text-xs p-3 rounded-lg bg-gray-50 text-gray-600">
+                    {meal === 'spuntini' ? (
+                         <div className="text-red-600 bg-red-50 flex items-center gap-2">
+                           <span>⚠️</span>
+                           Nell'ultimo mese il paziente ha registrato problemi di digestione dopo lo spuntino della mattina.
+                        </div>
+                    ) : (
+                        `Dettagli per ${meal}...`
+                    )}
+                </div>
+            )}
+        </div>
+    );
 }
 
 // =================================================================
-// --- COMPONENTE RIUTILIZZABILE PER I GRAFICI A CIAMBELLA ---
+// --- COMPONENTE PER I GRAFICI A CIAMBELLA ---
 // =================================================================
 function GaugeChart({ value, color, label }) {
     const data = [{ name: 'value', value: value }, { name: 'remaining', value: 100 - value }];
@@ -457,6 +339,131 @@ function GaugeChart({ value, color, label }) {
         </div>
     );
 }
+
+// =================================================================
+// --- VISTA DETTAGLIO CLIENTE ---
+// =================================================================
+function ClientDetailView({ client, onBack }) {
+    const weightData = [
+        { name: 'Gen', kg: 0 }, { name: 'Feb', kg: -1.5 }, { name: 'Mar', kg: -2.2 },
+        { name: 'Apr', kg: -3 }, { name: 'Mag', kg: -4 }, { name: 'Giu', kg: -3.8 },
+        { name: 'Lug', kg: -3.2 }, { name: 'Ago', kg: -2.5 },
+    ];
+    
+    const [openMeal, setOpenMeal] = useState('spuntini');
+
+    const handleMealClick = (meal) => {
+        setOpenMeal(openMeal === meal ? null : meal);
+    };
+
+    return(
+        <div className="flex flex-col gap-6">
+            <div className="flex justify-between items-center">
+                 <button onClick={onBack} className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">
+                    <BackIcon />
+                    Tutti i clienti
+                </button>
+                <button className="text-sm font-semibold text-black bg-yellow-300 px-4 py-2 rounded-lg shadow-sm hover:bg-yellow-400">
+                    Modifica widget
+                </button>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-1 flex flex-col gap-6">
+                    <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col items-center text-center">
+                        <img src={client.avatar} alt={client.name} className="w-28 h-28 rounded-full object-cover mb-4" />
+                        <h2 className="text-2xl font-bold">{client.name}</h2>
+                        <p className="text-gray-500 mb-4">{client.age} anni - {client.location}</p>
+                        <div className="flex flex-wrap justify-center gap-2 my-4">
+                            <span className="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1.5 rounded-full">{client.weightChange}</span>
+                            <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1.5 rounded-full">Prossima visita: {client.nextVisit}</span>
+                            <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">{client.dietType}</span>
+                            <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">Massa grassa: {client.details.fatMass}</span>
+                            <span className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-full">Altezza: {client.details.height}</span>
+                        </div>
+                        <button className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 shadow-md">
+                           <ChatIcon />
+                        </button>
+                    </div>
+
+                    <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-4">Livello di soddisfazione</h3>
+                        <GaugeChart value={client.details.satisfaction} color="#FF7300" label="Soddisfatta del suo percorso" />
+                        <div className="text-center mt-4">
+                            <button className="text-sm text-gray-600 font-semibold hover:underline">Dettagli</button>
+                        </div>
+                    </div>
+                     <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-4">Livello di benessere</h3>
+                        <GaugeChart value={client.details.wellness} color="#FFC107" label="Buono" />
+                         <div className="text-center mt-4">
+                            <button className="text-sm text-gray-600 font-semibold hover:underline">Dettagli</button>
+                        </div>
+                     </div>
+                </div>
+
+                <div className="lg:col-span-2 flex flex-col gap-6">
+                    <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-2">Andamento peso corporeo</h3>
+                        <ResponsiveContainer width="100%" height={250}>
+                             <AreaChart data={weightData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+                                <defs>
+                                    <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#FF7300" stopOpacity={0.4}/>
+                                    <stop offset="95%" stopColor="#FF7300" stopOpacity={0}/>
+                                    </linearGradient>
+                                </defs>
+                                <XAxis dataKey="name" stroke="#b0b0b0" fontSize={12} />
+                                <YAxis stroke="#b0b0b0" fontSize={12} />
+                                <Tooltip />
+                                <Area type="monotone" dataKey="kg" stroke="#FF7300" strokeWidth={3} fill="url(#colorWeight)" />
+                             </AreaChart>
+                        </ResponsiveContainer>
+                    </div>
+                     <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-4">Aderenza ai pasti</h3>
+                        <div className="space-y-2">
+                            {Object.entries(client.details.adherence).map(([meal, value]) => (
+                                <AdherenceItem key={meal} meal={meal} value={value} isOpen={openMeal === meal} onClick={() => handleMealClick(meal)} />
+                            ))}
+                        </div>
+                     </div>
+                </div>
+                
+                <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-4">Biomarcatori</h3>
+                         <div className="space-y-4">
+                            <div>
+                                <div className="flex justify-between text-sm mb-1 font-semibold"><span>Microbioma</span><span>Buono</span></div>
+                                <div className="w-full bg-gray-200 rounded-full h-2.5"><div className="bg-green-500 h-2.5 rounded-full" style={{ width: `85%` }}></div></div>
+                            </div>
+                             <div>
+                                <div className="flex justify-between text-sm mb-1 font-semibold"><span>Indice-glicemico</span><span>Media</span></div>
+                                <div className="w-full bg-gray-200 rounded-full h-2.5"><div className="bg-yellow-500 h-2.5 rounded-full" style={{ width: `55%` }}></div></div>
+                            </div>
+                         </div>
+                    </div>
+                     <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-4">Età biologica</h3>
+                        <div className="space-y-3">
+                           <div>
+                                <p className="text-sm font-semibold">Età anagrafica</p>
+                                <div className="w-full bg-gray-200 rounded-lg h-6 flex items-center px-2 text-sm">{client.age} anni</div>
+                           </div>
+                            <div>
+                                <p className="text-sm font-semibold">Età biologica</p>
+                                <div className="bg-green-200 rounded-lg h-6 flex items-center px-2 text-sm text-green-800 font-semibold" style={{width: `${(client.details.biologicalAge / client.age) * 100}%`}}>{client.details.biologicalAge} anni</div>
+                           </div>
+                        </div>
+                         <p className="text-xs text-gray-500 mt-4">In base allo stile attuale, l'età biologica del paziente è di {client.details.biologicalAge} anni &gt;</p>
+                     </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 
 // =================================================================
 // --- VISTA DASHBOARD COMPLETA (CORRETTA E VERIFICATA) ---
