@@ -6,7 +6,7 @@ import {
   AreaChart, Area, Legend, PieChart, Pie, Cell, LineChart, Line,
 } from 'recharts';
 
-// --- DATI DI ESEMPIO PER I CLIENTI (con struttura 'details' completa) ---
+// --- DATI DI ESEMPIO PER I CLIENTI ---
 const clients = [
   {
     id: 1,
@@ -165,6 +165,8 @@ const SearchIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-5
 const BackIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>);
 const ChatIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>);
 const ChevronDownIcon = () => (<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>);
+// --- ICONA FILTRO (RI-AGGIUNTA) ---
+const FilterIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>);
 
 
 // --- COMPONENTE PRINCIPALE APP ---
@@ -210,11 +212,10 @@ export default function App() {
       </nav>
       
       <main>
+        {activeSection === 'dashboard' && <DashboardView user={user} />}
         {activeSection === 'client' && <ClientManagementView />}
-        {/* Aggiungi qui le altre viste */}
       </main>
       
-      {/* Pulsante Fluttuante Aggiornato */}
       <div className="fixed bottom-6 right-6 bg-yellow-400 text-black font-semibold px-5 py-3 rounded-full shadow-lg flex items-center gap-3">
         <span>💬</span>
         <span>Hai 3 nuovi messaggi</span>
@@ -224,11 +225,8 @@ export default function App() {
   );
 }
 
-
-
-
 // =================================================================
-// --- VISTA CLIENT MANAGEMENT (con logica di selezione) ---
+// --- VISTA CLIENT MANAGEMENT (AGGIORNATA) ---
 // =================================================================
 function ClientManagementView() {
     const [selectedClient, setSelectedClient] = useState(null);
@@ -238,16 +236,14 @@ function ClientManagementView() {
     }
     
     return (
-      <div>
-      {/* Header con filtri */}
-      <div className="flex justify-end mb-6">
-          <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm">
-              Filtri: ultimi lead
-              <FilterIcon />
-          </button>
-      </div>
         <div>
-            {/* ... codice griglia clienti ... */}
+            {/* --- PULSANTE FILTRI (RI-AGGIUNTO) --- */}
+            <div className="flex justify-end mb-6">
+                <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">
+                    Filtri: ultimi lead
+                    <FilterIcon />
+                </button>
+            </div>
              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {clients.map(client => (
                     <ClientCard key={client.id} client={client} onClick={() => setSelectedClient(client)} />
@@ -275,8 +271,6 @@ function ClientCard({ client, onClick }) {
     )
 }
 
-
-
 // =================================================================
 // --- VISTA DETTAGLIO CLIENTE (AGGIORNATA) ---
 // =================================================================
@@ -302,7 +296,7 @@ function ClientDetailView({ client, onBack }) {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Colonna Sinistra */}
                 <div className="lg:col-span-1 flex flex-col gap-6">
-                    {/* Card Profilo Dettagliata - AGGIORNATA */}
+                    {/* Card Profilo Dettagliata */}
                     <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col items-center text-center">
                         <img src={client.avatar} alt={client.name} className="w-28 h-28 rounded-full object-cover mb-4" />
                         <h2 className="text-2xl font-bold">{client.name}</h2>
@@ -319,7 +313,7 @@ function ClientDetailView({ client, onBack }) {
                         </button>
                     </div>
 
-                    {/* Card Livello di Soddisfazione - NUOVO WIDGET */}
+                    {/* Card Livello di Soddisfazione */}
                     <div className="bg-white rounded-2xl p-6 shadow-sm">
                         <h3 className="font-bold mb-4">Livello di soddisfazione</h3>
                         <GaugeChart value={client.details.satisfaction} color="#FF7300" label="Soddisfatta del suo percorso" />
@@ -327,7 +321,7 @@ function ClientDetailView({ client, onBack }) {
                             <button className="text-sm text-gray-600 font-semibold hover:underline">Dettagli</button>
                         </div>
                     </div>
-                     {/* Card Livello di Benessere - NUOVO WIDGET */}
+                     {/* Card Livello di Benessere */}
                      <div className="bg-white rounded-2xl p-6 shadow-sm">
                         <h3 className="font-bold mb-4">Livello di benessere</h3>
                         <GaugeChart value={client.details.wellness} color="#FFC107" label="Buono" />
@@ -339,7 +333,7 @@ function ClientDetailView({ client, onBack }) {
 
                 {/* Colonna Destra */}
                 <div className="lg:col-span-2 flex flex-col gap-6">
-                    {/* Card Grafico Peso - AGGIORNATA */}
+                    {/* Card Grafico Peso */}
                     <div className="bg-white rounded-2xl p-6 shadow-sm">
                         <h3 className="font-bold mb-2">Andamento peso corporeo</h3>
                         <ResponsiveContainer width="100%" height={250}>
@@ -357,7 +351,7 @@ function ClientDetailView({ client, onBack }) {
                              </AreaChart>
                         </ResponsiveContainer>
                     </div>
-                    {/* Card Aderenza Pasti - AGGIORNATA */}
+                    {/* Card Aderenza Pasti */}
                      <div className="bg-white rounded-2xl p-6 shadow-sm">
                         <h3 className="font-bold mb-4">Aderenza ai pasti</h3>
                         <div className="space-y-4">
@@ -382,7 +376,6 @@ function ClientDetailView({ client, onBack }) {
                         </div>
                      </div>
                 </div>
-                {/* Qui sotto andranno i widget mancanti quando vorrai aggiungerli */}
             </div>
         </div>
     )
@@ -392,29 +385,29 @@ function ClientDetailView({ client, onBack }) {
 // --- COMPONENTE RIUTILIZZABILE PER I GRAFICI A CIAMBELLA ---
 // =================================================================
 function GaugeChart({ value, color, label }) {
-  const data = [{ name: 'value', value: value }, { name: 'remaining', value: 100 - value }];
-  return (
-      <div className="relative w-48 h-48 mx-auto">
-          <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                  <Pie data={data} dataKey="value" innerRadius={60} outerRadius={75} startAngle={90} endAngle={-270} cornerRadius={50}>
-                      <Cell fill={color} />
-                      <Cell fill="#f0f0f0" />
-                  </Pie>
-              </PieChart>
-          </ResponsiveContainer>
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <span className="text-4xl font-bold" style={{ color: color }}>{value}%</span>
-              <span className="text-xs text-gray-500 mt-1">{label}</span>
-          </div>
-      </div>
-  );
+    const data = [{ name: 'value', value: value }, { name: 'remaining', value: 100 - value }];
+    return (
+        <div className="relative w-48 h-48 mx-auto">
+            <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                    <Pie data={data} dataKey="value" innerRadius={60} outerRadius={75} startAngle={90} endAngle={-270} cornerRadius={50}>
+                        <Cell fill={color} />
+                        <Cell fill="#f0f0f0" />
+                    </Pie>
+                </PieChart>
+            </ResponsiveContainer>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span className="text-4xl font-bold" style={{ color: color }}>{value}%</span>
+                <span className="text-xs text-gray-500 mt-1">{label}</span>
+            </div>
+        </div>
+    );
 }
+
 // =================================================================
-// --- VECCHIO CODICE SPOSTATO NEL COMPONENTE DASHBOARD ---
+// --- VISTA DASHBOARD COMPLETA (RI-AGGIUNTA) ---
 // =================================================================
 function DashboardView({ user }) {
-  // Stati e funzioni del calendario (inclusi per completezza)
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [appointments, setAppointments] = useState({[new Date().toDateString()]: ["10:00: prima visita Mario Rossi"]});
   const [newAppt, setNewAppt] = useState("");
@@ -441,7 +434,6 @@ function DashboardView({ user }) {
   const weekDays = getWeekDays(new Date(), weekOffset);
   const currentMonthYear = weekDays[0].fullDate.toLocaleDateString("it-IT", { month: "long", year: "numeric" });
   
-  // Dati dei grafici (inclusi per completezza)
   const ageData = [{ group: '13-18', value: 30 }, { group: '19-25', value: 80 }, { group: '26-30', value: 50 }, { group: '31-40', value: 70 }, { group: '<40', value: 40 }];
   const visitsData = Array.from({ length: 14 }, (_, i) => ({ day: `G${i + 1}`, prime: Math.floor(Math.random() * 50 + 50), check: Math.floor(Math.random() * 50) }));
   const pieData = [{ name: 'Empatico', value: 400 }, { name: 'Altri', value: 400 }];
@@ -521,7 +513,6 @@ function DashboardView({ user }) {
           <button className="bg-yellow-400 text-black font-semibold px-4 py-3 rounded-lg mt-2 w-full shadow-md hover:bg-yellow-500 transition-all">Vai alle ricette</button>
         </div>
       </div>
-
       <div className="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm flex flex-col gap-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-[#FFF9E6] rounded-2xl p-4 flex items-center gap-4">
@@ -552,7 +543,6 @@ function DashboardView({ user }) {
               </div>
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="rounded-2xl p-4 border border-gray-100">
             <h3 className="font-bold mb-2">Media età</h3>
