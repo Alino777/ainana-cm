@@ -318,30 +318,30 @@ function AdherenceItem({ meal, value, isOpen, onClick }) {
 }
 
 // =================================================================
-// --- COMPONENTE PER I GRAFICI A CIAMBELLA ---
+// --- COMPONENTE GAUGE CHART (LEGGERMENTE RIMPICCIOLITO) ---
 // =================================================================
 function GaugeChart({ value, color, label }) {
-    const data = [{ name: 'value', value: value }, { name: 'remaining', value: 100 - value }];
-    return (
-        <div className="relative w-48 h-48 mx-auto">
-            <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                    <Pie data={data} dataKey="value" innerRadius={60} outerRadius={75} startAngle={90} endAngle={-270} cornerRadius={50}>
-                        <Cell fill={color} />
-                        <Cell fill="#f0f0f0" />
-                    </Pie>
-                </PieChart>
-            </ResponsiveContainer>
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span className="text-4xl font-bold" style={{ color: color }}>{value}%</span>
-                <span className="text-xs text-gray-500 mt-1">{label}</span>
-            </div>
-        </div>
-    );
+  const data = [{ name: 'value', value: value }, { name: 'remaining', value: 100 - value }];
+  return (
+      <div className="relative w-36 h-36 mx-auto">
+          <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                  <Pie data={data} dataKey="value" innerRadius={45} outerRadius={60} startAngle={90} endAngle={-270} cornerRadius={50}>
+                      <Cell fill={color} />
+                      <Cell fill="#f0f0f0" />
+                  </Pie>
+              </PieChart>
+          </ResponsiveContainer>
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center -mt-2">
+              <span className="text-3xl font-bold" style={{ color: color }}>{value}%</span>
+              <span className="text-xs text-gray-500 max-w-[80px] leading-tight">{label}</span>
+          </div>
+      </div>
+  );
 }
 
 // =================================================================
-// --- VISTA DETTAGLIO CLIENTE (CON LAYOUT CORRETTO A 2 COLONNE) ---
+// --- VISTA DETTAGLIO CLIENTE (CON LAYOUT FINALE) ---
 // =================================================================
 function ClientDetailView({ client, onBack }) {
   const weightData = [
@@ -358,7 +358,6 @@ function ClientDetailView({ client, onBack }) {
 
   return(
       <div className="flex flex-col gap-6">
-          {/* Header con pulsanti */}
           <div className="flex justify-between items-center">
                <button onClick={onBack} className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">
                   <BackIcon />
@@ -369,7 +368,6 @@ function ClientDetailView({ client, onBack }) {
               </button>
           </div>
 
-          {/* Griglia principale a 2 colonne per i widget */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
               
               {/* --- COLONNA SINISTRA --- */}
@@ -391,23 +389,25 @@ function ClientDetailView({ client, onBack }) {
                       </button>
                   </div>
 
-                  {/* Card Livello di Soddisfazione */}
-                  <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h3 className="font-bold mb-4">Livello di soddisfazione</h3>
-                      <GaugeChart value={client.details.satisfaction} color="#FF7300" label="Soddisfatta del suo percorso" />
-                      <div className="text-center mt-4">
-                          <button className="text-sm text-gray-600 font-semibold hover:underline">Dettagli</button>
+                  {/* --- CONTENITORE PER SODDISFAZIONE E BENESSERE AFFIANCATI --- */}
+                  <div className="grid grid-cols-2 gap-6">
+                      {/* Card Livello di Soddisfazione */}
+                      <div className="bg-white rounded-2xl p-4 shadow-sm text-center">
+                          <h3 className="font-bold mb-2 text-sm">Soddisfazione</h3>
+                          <GaugeChart value={client.details.satisfaction} color="#FF7300" label="Del suo percorso" />
+                          <div className="text-center mt-2">
+                              <button className="text-xs text-gray-500 font-semibold hover:underline">Dettagli</button>
+                          </div>
+                      </div>
+                      {/* Card Livello di Benessere */}
+                      <div className="bg-white rounded-2xl p-4 shadow-sm text-center">
+                          <h3 className="font-bold mb-2 text-sm">Benessere</h3>
+                          <GaugeChart value={client.details.wellness} color="#FFC107" label="Buono" />
+                          <div className="text-center mt-2">
+                              <button className="text-xs text-gray-500 font-semibold hover:underline">Dettagli</button>
+                          </div>
                       </div>
                   </div>
-
-                   {/* Card Livello di Benessere */}
-                   <div className="bg-white rounded-2xl p-6 shadow-sm">
-                      <h3 className="font-bold mb-4">Livello di benessere</h3>
-                      <GaugeChart value={client.details.wellness} color="#FFC107" label="Buono" />
-                       <div className="text-center mt-4">
-                          <button className="text-sm text-gray-600 font-semibold hover:underline">Dettagli</button>
-                      </div>
-                   </div>
                    
                   {/* Card Biomarcatori */}
                    <div className="bg-white rounded-2xl p-6 shadow-sm">
@@ -480,7 +480,6 @@ function ClientDetailView({ client, onBack }) {
       </div>
   )
 }
-
 // =================================================================
 // --- VISTA DASHBOARD COMPLETA (CORRETTA E VERIFICATA) ---
 // =================================================================
