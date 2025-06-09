@@ -7,6 +7,7 @@ import {
 } from 'recharts';
 
 // --- DATI DI ESEMPIO PER I CLIENTI ---
+// --- DATI DI ESEMPIO PER I CLIENTI (AGGIORNATI) ---
 const clients = [
   {
     id: 1,
@@ -17,16 +18,8 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-    details: {
-        satisfaction: 80,
-        wellness: 50,
-        fatMass: "40%",
-        height: "1,79",
-        adherence: { colazione: 80, pranzo: 95, cena: 87, spuntini: 25 },
-        biologicalAge: 27,
-    }
+    // La riga 'badge: "G"' è stata rimossa da qui
   },
-  // ... altri clienti ...
   {
     id: 2,
     name: "Laura Bianchi",
@@ -36,9 +29,69 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-    details: { satisfaction: 70, wellness: 80, fatMass: "35%", height: "1,65", adherence: { colazione: 90, pranzo: 90, cena: 80, spuntini: 60 }, biologicalAge: 24 }
+  },
+    {
+    id: 3,
+    name: "Laura Bianchi",
+    age: 35,
+    location: "Roma",
+    avatar: "https://i.pravatar.cc/150?u=laura.bianchi.2",
+    weightChange: "-3.2 kg",
+    dietType: "Dieta mediterranea",
+    nextVisit: "14 Luglio 2025",
+  },
+    {
+    id: 4,
+    name: "Mario Rossi",
+    age: 29,
+    location: "Roma",
+    avatar: "https://i.pravatar.cc/150?u=mario.rossi.2",
+    weightChange: "-3.2 kg",
+    dietType: "Dieta mediterranea",
+    nextVisit: "14 Luglio 2025",
+  },
+   {
+    id: 5,
+    name: "Laura Bianchi",
+    age: 70,
+    location: "Milano",
+    avatar: "https://i.pravatar.cc/150?u=laura.bianchi.3",
+    weightChange: "-3.2 kg",
+    dietType: "Dieta mediterranea",
+    nextVisit: "14 Luglio 2025",
+  },
+  {
+    id: 6,
+    name: "Laura Bianchi",
+    age: 25,
+    location: "Milano",
+    avatar: "https://i.pravatar.cc/150?u=laura.bianchi.4",
+    weightChange: "-3.2 kg",
+    dietType: "Dieta mediterranea",
+    nextVisit: "14 Luglio 2025",
+  },
+  {
+    id: 7,
+    name: "Laura Bianchi",
+    age: 23,
+    location: "Catania",
+    avatar: "https://i.pravatar.cc/150?u=laura.bianchi.5",
+    weightChange: "-3.2 kg",
+    dietType: "Dieta mediterranea",
+    nextVisit: "14 Luglio 2025",
+  },
+  {
+    id: 8,
+    name: "Mario Rossi",
+    age: 29,
+    location: "Roma",
+    avatar: "https://i.pravatar.cc/150?u=mario.rossi.3",
+    weightChange: "-3.2 kg",
+    dietType: "Dieta mediterranea",
+    nextVisit: "14 Luglio 2025",
   },
 ];
+
 
 
 // --- COMPONENTI ICONA ---
