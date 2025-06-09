@@ -27,7 +27,7 @@ const clients = [
         adherence: { colazione: 80, pranzo: 95, cena: 87, spuntini: 25 },
         biologicalAge: 27,
     }
-  }, // <-- La virgola è presente
+  },
   {
     id: 2,
     name: "Laura Bianchi",
@@ -45,7 +45,7 @@ const clients = [
         adherence: { colazione: 90, pranzo: 90, cena: 80, spuntini: 60 }, 
         biologicalAge: 24 
     }
-  }, // <-- La virgola è presente
+  },
    {
     id: 3,
     name: "Laura Bianchi",
@@ -63,7 +63,7 @@ const clients = [
         adherence: { colazione: 95, pranzo: 95, cena: 90, spuntini: 70 }, 
         biologicalAge: 32 
     }
-  }, // <-- La virgola è presente
+  },
     {
     id: 4,
     name: "Mario Rossi",
@@ -80,7 +80,8 @@ const clients = [
         height: "1,82", 
         adherence: { colazione: 70, pranzo: 80, cena: 75, spuntini: 40 }, 
         biologicalAge: 28 
-    },
+    }
+  }, // <-- Ho chiuso qui l'oggetto 4 e aggiunto la virgola
    {
     id: 5,
     name: "Laura Bianchi",
@@ -90,6 +91,15 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
+    // Ho aggiunto l'oggetto 'details' mancante
+    details: { 
+        satisfaction: 75, 
+        wellness: 70, 
+        fatMass: "45%", 
+        height: "1,60", 
+        adherence: { colazione: 80, pranzo: 85, cena: 80, spuntini: 70 }, 
+        biologicalAge: 68 
+    }
   },
   {
     id: 6,
@@ -100,6 +110,15 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
+    // Ho aggiunto l'oggetto 'details' mancante
+    details: { 
+        satisfaction: 88, 
+        wellness: 90, 
+        fatMass: "30%", 
+        height: "1,68", 
+        adherence: { colazione: 95, pranzo: 95, cena: 95, spuntini: 80 }, 
+        biologicalAge: 23 
+    }
   },
   {
     id: 7,
@@ -110,6 +129,15 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
+    // Ho aggiunto l'oggetto 'details' mancante
+    details: { 
+        satisfaction: 82, 
+        wellness: 85, 
+        fatMass: "31%", 
+        height: "1,72", 
+        adherence: { colazione: 90, pranzo: 90, cena: 85, spuntini: 75 }, 
+        biologicalAge: 22 
+    }
   },
   {
     id: 8,
@@ -120,9 +148,17 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-  },
+    // Ho aggiunto l'oggetto 'details' mancante
+    details: { 
+        satisfaction: 78, 
+        wellness: 75, 
+        fatMass: "38%", 
+        height: "1,80", 
+        adherence: { colazione: 85, pranzo: 80, cena: 80, spuntini: 65 }, 
+        biologicalAge: 28 
+    }
+  } // <-- L'ultimo oggetto non ha la virgola finale
 ];
-
 
 
 // --- COMPONENTI ICONA ---
