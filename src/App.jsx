@@ -8,6 +8,7 @@ import {
 
 // --- DATI DI ESEMPIO PER I CLIENTI ---
 // --- DATI DI ESEMPIO PER I CLIENTI (AGGIORNATI) ---
+// --- DATI DI ESEMPIO PER I CLIENTI ---
 const clients = [
   {
     id: 1,
@@ -19,13 +20,14 @@ const clients = [
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
     details: {
-      satisfaction: 80,
-      wellness: 50,
-      fatMass: "40%",
-      height: "1,79",
-      adherence: { colazione: 80, pranzo: 95, cena: 87, spuntini: 25 },
-      biologicalAge: 27,
-  },
+        satisfaction: 80,
+        wellness: 50,
+        fatMass: "40%",
+        height: "1,79",
+        adherence: { colazione: 80, pranzo: 95, cena: 87, spuntini: 25 },
+        biologicalAge: 27,
+    }
+  }, // <-- La virgola è presente
   {
     id: 2,
     name: "Laura Bianchi",
@@ -36,14 +38,15 @@ const clients = [
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
     details: { 
-      satisfaction: 70, 
-      wellness: 80, 
-      fatMass: "35%", 
-      height: "1,65", 
-      adherence: { colazione: 90, pranzo: 90, cena: 80, spuntini: 60 }, 
-      biologicalAge: 24  }
-  },
-    {
+        satisfaction: 70, 
+        wellness: 80, 
+        fatMass: "35%", 
+        height: "1,65", 
+        adherence: { colazione: 90, pranzo: 90, cena: 80, spuntini: 60 }, 
+        biologicalAge: 24 
+    }
+  }, // <-- La virgola è presente
+   {
     id: 3,
     name: "Laura Bianchi",
     age: 35,
@@ -52,7 +55,15 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-  },
+     details: { 
+        satisfaction: 90, 
+        wellness: 85, 
+        fatMass: "33%", 
+        height: "1,70", 
+        adherence: { colazione: 95, pranzo: 95, cena: 90, spuntini: 70 }, 
+        biologicalAge: 32 
+    }
+  }, // <-- La virgola è presente
     {
     id: 4,
     name: "Mario Rossi",
@@ -62,7 +73,14 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-  },
+    details: { 
+        satisfaction: 60, 
+        wellness: 65, 
+        fatMass: "42%", 
+        height: "1,82", 
+        adherence: { colazione: 70, pranzo: 80, cena: 75, spuntini: 40 }, 
+        biologicalAge: 28 
+    },
    {
     id: 5,
     name: "Laura Bianchi",
