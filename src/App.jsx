@@ -17,7 +17,6 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-    badge: "G",
   },
   {
     id: 2,
