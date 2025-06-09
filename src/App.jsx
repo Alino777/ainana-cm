@@ -2,8 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import 'react-calendar/dist/Calendar.css'; 
 import {
-  BarChart, Bar, XAxis, Tooltip, ResponsiveContainer,
-  AreaChart, Area, Legend, PieChart, Pie, Cell
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
+  AreaChart, Area, Legend, PieChart, Pie, Cell, LineChart, Line,
 } from 'recharts';
 
 // --- DATI DI ESEMPIO PER I CLIENTI ---
@@ -17,7 +17,16 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
+    details: {
+        satisfaction: 80,
+        wellness: 50,
+        fatMass: "40%",
+        height: "1,79",
+        adherence: { colazione: 80, pranzo: 95, cena: 87, spuntini: 25 },
+        biologicalAge: 27,
+    }
   },
+  // ... altri clienti ...
   {
     id: 2,
     name: "Laura Bianchi",
@@ -27,86 +36,20 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-  },
-    {
-    id: 3,
-    name: "Laura Bianchi",
-    age: 35,
-    location: "Roma",
-    avatar: "https://i.pravatar.cc/150?u=laura.bianchi.2",
-    weightChange: "-3.2 kg",
-    dietType: "Dieta mediterranea",
-    nextVisit: "14 Luglio 2025",
-  },
-    {
-    id: 4,
-    name: "Mario Rossi",
-    age: 29,
-    location: "Roma",
-    avatar: "https://i.pravatar.cc/150?u=mario.rossi.2",
-    weightChange: "-3.2 kg",
-    dietType: "Dieta mediterranea",
-    nextVisit: "14 Luglio 2025",
-  },
-   {
-    id: 5,
-    name: "Laura Bianchi",
-    age: 70,
-    location: "Milano",
-    avatar: "https://i.pravatar.cc/150?u=laura.bianchi.3",
-    weightChange: "-3.2 kg",
-    dietType: "Dieta mediterranea",
-    nextVisit: "14 Luglio 2025",
-  },
-  {
-    id: 6,
-    name: "Laura Bianchi",
-    age: 25,
-    location: "Milano",
-    avatar: "https://i.pravatar.cc/150?u=laura.bianchi.4",
-    weightChange: "-3.2 kg",
-    dietType: "Dieta mediterranea",
-    nextVisit: "14 Luglio 2025",
-  },
-  {
-    id: 7,
-    name: "Laura Bianchi",
-    age: 23,
-    location: "Catania",
-    avatar: "https://i.pravatar.cc/150?u=laura.bianchi.5",
-    weightChange: "-3.2 kg",
-    dietType: "Dieta mediterranea",
-    nextVisit: "14 Luglio 2025",
-  },
-  {
-    id: 8,
-    name: "Mario Rossi",
-    age: 29,
-    location: "Roma",
-    avatar: "https://i.pravatar.cc/150?u=mario.rossi.3",
-    weightChange: "-3.2 kg",
-    dietType: "Dieta mediterranea",
-    nextVisit: "14 Luglio 2025",
+    details: { satisfaction: 70, wellness: 80, fatMass: "35%", height: "1,65", adherence: { colazione: 90, pranzo: 90, cena: 80, spuntini: 60 }, biologicalAge: 24 }
   },
 ];
 
 
 // --- COMPONENTI ICONA ---
-const SearchIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-  </svg>
-);
-const FilterIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-);
-
+const SearchIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>);
+const FilterIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>);
+const BackIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>);
+const ChatIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>);
 
 // --- COMPONENTE PRINCIPALE APP ---
 export default function App() {
-  const [activeSection, setActiveSection] = useState("dashboard");
+  const [activeSection, setActiveSection] = useState("client"); // Default su client management per test
   const user = { name: "Anna", avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d" };
 
   const tabs = [
@@ -132,11 +75,7 @@ export default function App() {
               >
                 {tab.label}
                 {activeSection === tab.key && (
-                  <motion.div
-                    layoutId="underline"
-                    className="absolute inset-0 bg-yellow-400 rounded-full z-[-1]"
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  />
+                  <motion.div layoutId="underline" className="absolute inset-0 bg-yellow-400 rounded-full z-[-1]" transition={{ type: "spring", stiffness: 500, damping: 30 }}/>
                 )}
               </button>
             ))}
@@ -149,12 +88,10 @@ export default function App() {
              </div>
         </div>
       </nav>
-
-      {/* --- RENDER CONDZIONALE DELLE VISTE --- */}
+      
       <main>
         {activeSection === 'dashboard' && <DashboardView user={user} />}
         {activeSection === 'client' && <ClientManagementView />}
-        {/* Qui puoi aggiungere le altre viste come 'dieta' e 'consigli' */}
       </main>
       
       <div className="fixed bottom-6 right-6 bg-yellow-400 text-black font-semibold px-5 py-3 rounded-full shadow-lg flex items-center gap-3">
@@ -166,54 +103,46 @@ export default function App() {
 }
 
 // =================================================================
-// --- NUOVO COMPONENTE: VISTA CLIENT MANAGEMENT ---
+// --- VISTA CLIENT MANAGEMENT (con logica di selezione) ---
 // =================================================================
 function ClientManagementView() {
+    const [selectedClient, setSelectedClient] = useState(null);
+
+    // Se un cliente è selezionato, mostra la sua pagina di dettaglio
+    if (selectedClient) {
+        return <ClientDetailView client={selectedClient} onBack={() => setSelectedClient(null)} />
+    }
+    
+    // Altrimenti, mostra la griglia dei clienti
     return (
         <div>
-            {/* Header con filtri */}
             <div className="flex justify-end mb-6">
-                <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm">
-                    Filtri: ultimi lead
-                    <FilterIcon />
+                <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">
+                    Filtri: ultimi lead <FilterIcon />
                 </button>
             </div>
-
-            {/* Griglia Clienti */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {clients.map(client => (
-                    <ClientCard key={client.id} client={client} />
+                    <ClientCard key={client.id} client={client} onClick={() => setSelectedClient(client)} />
                 ))}
             </div>
         </div>
     )
 }
 
-// --- NUOVO COMPONENTE: SCHEDA CLIENTE RIUTILIZZABILE ---
-function ClientCard({ client }) {
+// --- Scheda Cliente (aggiornata con onClick e cursor-pointer) ---
+function ClientCard({ client, onClick }) {
     return(
-        <div className="bg-white rounded-2xl p-4 shadow-sm text-center flex flex-col items-center hover:shadow-lg transition-shadow duration-300">
-            {/* Avatar */}
+        <div onClick={onClick} className="bg-white rounded-2xl p-4 shadow-sm text-center flex flex-col items-center hover:shadow-lg transition-shadow duration-300 cursor-pointer">
             <div className="relative mb-3">
                  <img src={client.avatar} alt={client.name} className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md" />
-                 {client.badge && (
-                    <span className="absolute -top-1 -left-1 w-8 h-8 bg-blue-500 text-white font-bold text-lg flex items-center justify-center rounded-full border-4 border-[#FFFBF0]">
-                        {client.badge}
-                    </span>
-                 )}
             </div>
-            
-            {/* Info principali */}
             <h3 className="font-bold text-lg">{client.name}</h3>
             <p className="text-sm text-gray-500 mb-3">{client.age} anni - {client.location}</p>
-
-            {/* Tags */}
             <div className="flex flex-wrap justify-center gap-2 mb-4">
                 <span className="text-xs font-semibold bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">{client.weightChange}</span>
                 <span className="text-xs font-semibold bg-gray-100 text-gray-700 px-3 py-1 rounded-full">{client.dietType}</span>
             </div>
-            
-            {/* Prossima visita */}
             <div className="mt-auto pt-3 border-t border-gray-100 w-full">
                 <p className="text-xs text-gray-400">Prossima visita</p>
                 <p className="text-sm font-semibold text-gray-600">{client.nextVisit}</p>
@@ -222,6 +151,143 @@ function ClientCard({ client }) {
     )
 }
 
+// =================================================================
+// --- NUOVA VISTA: DETTAGLIO CLIENTE ---
+// =================================================================
+function ClientDetailView({ client, onBack }) {
+    // Dati di esempio per il grafico del peso
+    const weightData = [
+        { name: 'Gen', kg: -1 }, { name: 'Feb', kg: -4 }, { name: 'Mar', kg: -2 },
+        { name: 'Apr', kg: -3 }, { name: 'Mag', kg: -4 }, { name: 'Giu', kg: -3.2 },
+        { name: 'Lug', kg: -2 }, { name: 'Ago', kg: 0 },
+    ];
+    
+    return(
+        <div className="flex flex-col gap-6">
+            {/* Header della pagina di dettaglio con pulsante Indietro */}
+            <div className="flex justify-between items-center">
+                 <button onClick={onBack} className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">
+                    <BackIcon />
+                    Tutti i clienti
+                </button>
+                <button className="text-sm font-semibold text-white bg-yellow-400 px-4 py-2 rounded-lg shadow-sm hover:bg-yellow-500">
+                    Modifica widget
+                </button>
+            </div>
+
+            {/* Griglia per i widget di dettaglio */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                {/* Colonna Sinistra */}
+                <div className="lg:col-span-1 flex flex-col gap-6">
+                    {/* Card Profilo Dettagliata */}
+                    <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col items-center text-center">
+                        <img src={client.avatar} alt={client.name} className="w-28 h-28 rounded-full object-cover mb-4" />
+                        <h2 className="text-2xl font-bold">{client.name}</h2>
+                        <p className="text-gray-500">{client.age} anni - {client.location}</p>
+                        <div className="flex flex-wrap justify-center gap-2 my-4">
+                            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{client.weightChange}</span>
+                            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Prossima visita: {client.nextVisit}</span>
+                             <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{client.dietType}</span>
+                             <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Massa grassa: {client.details.fatMass}</span>
+                             <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Altezza: {client.details.height}</span>
+                        </div>
+                        <button className="bg-orange-100 text-orange-500 p-3 rounded-full hover:bg-orange-200">
+                           <ChatIcon />
+                        </button>
+                    </div>
+                     {/* Card Soddisfazione e Benessere */}
+                     <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-4">Livelli</h3>
+                        <div className="flex justify-around">
+                            <div className="text-center">
+                               <p className="font-semibold">Soddisfazione</p>
+                               <p className="text-3xl font-bold text-orange-500">{client.details.satisfaction}%</p>
+                               <button className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full mt-2">Dettagli</button>
+                            </div>
+                            <div className="text-center">
+                               <p className="font-semibold">Benessere</p>
+                               <p className="text-3xl font-bold text-yellow-500">{client.details.wellness}%</p>
+                               <button className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full mt-2">Dettagli</button>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+
+                {/* Colonna Destra */}
+                <div className="lg:col-span-2 flex flex-col gap-6">
+                    {/* Card Grafico Peso */}
+                    <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-2">Andamento peso corporeo</h3>
+                        <ResponsiveContainer width="100%" height={250}>
+                             <LineChart data={weightData}>
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Line type="monotone" dataKey="kg" stroke="#FF7300" strokeWidth={2} />
+                             </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                    {/* Card Aderenza Pasti */}
+                     <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-4">Aderenza ai pasti</h3>
+                        <div className="space-y-4">
+                            {Object.entries(client.details.adherence).map(([meal, value]) => (
+                                <div key={meal}>
+                                    <div className="flex justify-between text-sm mb-1">
+                                        <span className="font-semibold capitalize">{meal}</span>
+                                        <span>{value}% &gt;</span>
+                                    </div>
+                                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                                        <div className="bg-green-500 h-2.5 rounded-full" style={{ width: `${value}%` }}></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-4 text-xs text-red-600 bg-red-50 p-3 rounded-lg flex items-center gap-2">
+                           <span>⚠️</span>
+                           Nell'ultimo mese il paziente ha registrato problemi di digestione dopo lo spuntino della mattina
+                        </div>
+                     </div>
+                </div>
+
+                 {/* Riga Inferiore (su tutta la larghezza) */}
+                <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Card Biomarcatori */}
+                     <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-4">Biomarcatori</h3>
+                         <div className="space-y-4">
+                            <div>
+                                <div className="flex justify-between text-sm mb-1 font-semibold"><span>Microbioma</span><span>Buono</span></div>
+                                <div className="w-full bg-gray-200 rounded-full h-2.5"><div className="bg-green-500 h-2.5 rounded-full" style={{ width: `85%` }}></div></div>
+                            </div>
+                             <div>
+                                <div className="flex justify-between text-sm mb-1 font-semibold"><span>Indice-glicemico</span><span>Media</span></div>
+                                <div className="w-full bg-gray-200 rounded-full h-2.5"><div className="bg-yellow-500 h-2.5 rounded-full" style={{ width: `55%` }}></div></div>
+                            </div>
+                         </div>
+                    </div>
+                    {/* Card Età Biologica */}
+                     <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 className="font-bold mb-4">Età biologica</h3>
+                        <div className="space-y-3">
+                           <div>
+                                <p className="text-sm font-semibold">Età anagrafica</p>
+                                <div className="w-full bg-gray-200 rounded-lg h-6 flex items-center px-2 text-sm">{client.age} anni</div>
+                           </div>
+                            <div>
+                                <p className="text-sm font-semibold">Età biologica</p>
+                                <div className="bg-green-200 rounded-lg h-6 flex items-center px-2 text-sm text-green-800" style={{width: `${(client.details.biologicalAge / client.age) * 100}%`}}>{client.details.biologicalAge} anni</div>
+                           </div>
+                        </div>
+                         <p className="text-xs text-gray-500 mt-4">In base allo stile attuale, l'età biologica del paziente è di {client.details.biologicalAge} anni &gt;</p>
+                     </div>
+                </div>
+
+            </div>
+        </div>
+    )
+}
 
 // =================================================================
 // --- VECCHIO CODICE SPOSTATO NEL COMPONENTE DASHBOARD ---
