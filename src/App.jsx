@@ -426,7 +426,7 @@ function GaugeChart({ value, color, label }) {
 }
 
 // =================================================================
-// --- VISTA DASHBOARD COMPLETA (RI-AGGIUNTA) ---
+// --- VISTA DASHBOARD COMPLETA (CORRETTA E VERIFICATA) ---
 // =================================================================
 function DashboardView({ user }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -455,6 +455,7 @@ function DashboardView({ user }) {
   const weekDays = getWeekDays(new Date(), weekOffset);
   const currentMonthYear = weekDays[0].fullDate.toLocaleDateString("it-IT", { month: "long", year: "numeric" });
   
+  // Dati dei grafici
   const ageData = [{ group: '13-18', value: 30 }, { group: '19-25', value: 80 }, { group: '26-30', value: 50 }, { group: '31-40', value: 70 }, { group: '<40', value: 40 }];
   const visitsData = Array.from({ length: 14 }, (_, i) => ({ day: `G${i + 1}`, prime: Math.floor(Math.random() * 50 + 50), check: Math.floor(Math.random() * 50) }));
   const pieData = [{ name: 'Empatico', value: 400 }, { name: 'Altri', value: 400 }];
@@ -463,6 +464,7 @@ function DashboardView({ user }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      {/* Colonna Sinistra */}
       <div className="lg:col-span-1 flex flex-col gap-6">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-yellow-200 overflow-hidden shadow-inner">
@@ -515,44 +517,6 @@ function DashboardView({ user }) {
           </div>
         </div>
         
-                         {/* Riga Inferiore (su tutta la larghezza) */}
-                         <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Card Biomarcatori */}
-                     <div className="bg-white rounded-2xl p-6 shadow-sm">
-                        <h3 className="font-bold mb-4">Biomarcatori</h3>
-                         <div className="space-y-4">
-                            <div>
-                                <div className="flex justify-between text-sm mb-1 font-semibold"><span>Microbioma</span><span>Buono</span></div>
-                                <div className="w-full bg-gray-200 rounded-full h-2.5"><div className="bg-green-500 h-2.5 rounded-full" style={{ width: `85%` }}></div></div>
-                            </div>
-                             <div>
-                                <div className="flex justify-between text-sm mb-1 font-semibold"><span>Indice-glicemico</span><span>Media</span></div>
-                                <div className="w-full bg-gray-200 rounded-full h-2.5"><div className="bg-yellow-500 h-2.5 rounded-full" style={{ width: `55%` }}></div></div>
-                            </div>
-                         </div>
-                    </div>
-                    {/* Card Età Biologica */}
-                     <div className="bg-white rounded-2xl p-6 shadow-sm">
-                        <h3 className="font-bold mb-4">Età biologica</h3>
-                        <div className="space-y-3">
-                           <div>
-                                <p className="text-sm font-semibold">Età anagrafica</p>
-                                <div className="w-full bg-gray-200 rounded-lg h-6 flex items-center px-2 text-sm">{client.age} anni</div>
-                           </div>
-                            <div>
-                                <p className="text-sm font-semibold">Età biologica</p>
-                                <div className="bg-green-200 rounded-lg h-6 flex items-center px-2 text-sm text-green-800" style={{width: `${(client.details.biologicalAge / client.age) * 100}%`}}>{client.details.biologicalAge} anni</div>
-                           </div>
-                        </div>
-                         <p className="text-xs text-gray-500 mt-4">In base allo stile attuale, l'età biologica del paziente è di {client.details.biologicalAge} anni &gt;</p>
-                     </div>
-                </div>
-
-            </div>
-        </div>
-    )
-}
-
         <div className="bg-white rounded-2xl p-4 shadow-sm flex flex-col gap-4">
           <h3 className="font-bold px-2">Ultime ricette caricate</h3>
           <div className="bg-white p-2 rounded-lg flex items-center gap-3">
@@ -572,6 +536,8 @@ function DashboardView({ user }) {
           <button className="bg-yellow-400 text-black font-semibold px-4 py-3 rounded-lg mt-2 w-full shadow-md hover:bg-yellow-500 transition-all">Vai alle ricette</button>
         </div>
       </div>
+
+      {/* Colonna Destra */}
       <div className="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm flex flex-col gap-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-[#FFF9E6] rounded-2xl p-4 flex items-center gap-4">
@@ -602,6 +568,7 @@ function DashboardView({ user }) {
               </div>
           </div>
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="rounded-2xl p-4 border border-gray-100">
             <h3 className="font-bold mb-2">Media età</h3>
