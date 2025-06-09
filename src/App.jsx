@@ -212,9 +212,9 @@ export default function App() {
       </nav>
       
       <main>
-        {activeSection === 'dashboard' && <DashboardView user={user} />}
-        {activeSection === 'client' && <ClientManagementView />}
-      </main>
+  {/* {activeSection === 'dashboard' && <DashboardView user={user} />} */}
+  {activeSection === 'client' && <ClientManagementView />}
+</main>
       
       <div className="fixed bottom-6 right-6 bg-yellow-400 text-black font-semibold px-5 py-3 rounded-full shadow-lg flex items-center gap-3">
         <span>💬</span>
