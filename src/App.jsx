@@ -292,7 +292,7 @@ function ClientCard({ client, onClick }) {
     )
 }
 // =================================================================
-// --- VISTA DETTAGLIO CLIENTE (COMPLETA DI TUTTI I WIDGET) ---
+// --- VISTA DETTAGLIO CLIENTE (CON ACCORDION FUNZIONANTE) ---
 // =================================================================
 function ClientDetailView({ client, onBack }) {
   const weightData = [
@@ -301,6 +301,14 @@ function ClientDetailView({ client, onBack }) {
       { name: 'Lug', kg: -3.2 }, { name: 'Ago', kg: -2.5 },
   ];
   
+  // Stato per gestire quale sezione dell'accordion è aperta
+  const [openMeal, setOpenMeal] = useState('spuntini'); // Default: apri "spuntini"
+
+  const handleMealClick = (meal) => {
+      // Se clicco su una sezione già aperta, la chiudo. Altrimenti, la apro.
+      setOpenMeal(openMeal === meal ? null : meal);
+  };
+
   return(
       <div className="flex flex-col gap-6">
           <div className="flex justify-between items-center">
@@ -371,32 +379,24 @@ function ClientDetailView({ client, onBack }) {
                            </AreaChart>
                       </ResponsiveContainer>
                   </div>
-                  {/* Card Aderenza Pasti */}
+                  {/* Card Aderenza Pasti - AGGIORNATA CON LOGICA ACCORDION */}
                    <div className="bg-white rounded-2xl p-6 shadow-sm">
                       <h3 className="font-bold mb-4">Aderenza ai pasti</h3>
-                      <div className="space-y-4">
+                      <div className="space-y-2">
                           {Object.entries(client.details.adherence).map(([meal, value]) => (
-                              <div key={meal}>
-                                  <div className="flex justify-between items-center text-sm mb-1">
-                                      <span className="font-semibold capitalize">{meal}</span>
-                                      <span className="text-gray-500 flex items-center gap-2">
-                                          {value}% 
-                                          {meal === 'spuntini' ? <ChevronDownIcon /> : <span className="text-gray-400">&gt;</span>}
-                                      </span>
-                                  </div>
-                                  <div className="w-full bg-gray-200 rounded-full h-2.5">
-                                      <div className="bg-green-500 h-2.5 rounded-full" style={{ width: `${value}%` }}></div>
-                                  </div>
-                              </div>
+                              <AdherenceItem
+                                  key={meal}
+                                  meal={meal}
+                                  value={value}
+                                  isOpen={openMeal === meal}
+                                  onClick={() => handleMealClick(meal)}
+                              />
                           ))}
-                      </div>
-                      <div className="mt-4 text-xs text-red-600 bg-red-50 p-3 rounded-lg flex items-center gap-2">
-                         <span>⚠️</span>
-                         Nell'ultimo mese il paziente ha registrato problemi di digestione dopo lo spuntino della mattina
                       </div>
                    </div>
               </div>
-              
+
+
               {/* --- NUOVA RIGA INFERIORE CON I WIDGET MANCANTI --- */}
               <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Card Biomarcatori */}
