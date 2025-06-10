@@ -5,6 +5,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   AreaChart, Area, Legend, PieChart, Pie, Cell, LineChart, Line,
 } from 'recharts';
+import Chatbot from './components/Chatbot';
 
 // --- DATI DI ESEMPIO PER I CLIENTI ---
 const clients = [
@@ -663,3 +664,13 @@ function DashboardView({ user }) {
     </div>
   )
 }
+function App() {
+  return (
+    <div>
+      {/* Tutto il tuo sito */}
+      <Chatbot />
+    </div>
+  );
+}
+
+export default App;
