@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import 'react-calendar/dist/Calendar.css'; 
+import 'react-calendar/dist/Calendar.css';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   AreaChart, Area, Legend, PieChart, Pie, Cell, LineChart, Line,
@@ -36,13 +36,13 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-    details: { 
-        satisfaction: 70, 
-        wellness: 80, 
-        fatMass: "35%", 
-        height: "1,65", 
-        adherence: { colazione: 90, pranzo: 90, cena: 80, spuntini: 60 }, 
-        biologicalAge: 24 
+    details: {
+        satisfaction: 70,
+        wellness: 80,
+        fatMass: "35%",
+        height: "1,65",
+        adherence: { colazione: 90, pranzo: 90, cena: 80, spuntini: 60 },
+        biologicalAge: 24
     }
   },
    {
@@ -54,13 +54,13 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-     details: { 
-        satisfaction: 90, 
-        wellness: 85, 
-        fatMass: "33%", 
-        height: "1,70", 
-        adherence: { colazione: 95, pranzo: 95, cena: 90, spuntini: 70 }, 
-        biologicalAge: 32 
+     details: {
+        satisfaction: 90,
+        wellness: 85,
+        fatMass: "33%",
+        height: "1,70",
+        adherence: { colazione: 95, pranzo: 95, cena: 90, spuntini: 70 },
+        biologicalAge: 32
     }
   },
     {
@@ -72,15 +72,15 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-    details: { 
-        satisfaction: 60, 
-        wellness: 65, 
-        fatMass: "42%", 
-        height: "1,82", 
-        adherence: { colazione: 70, pranzo: 80, cena: 75, spuntini: 40 }, 
-        biologicalAge: 28 
+    details: {
+        satisfaction: 60,
+        wellness: 65,
+        fatMass: "42%",
+        height: "1,82",
+        adherence: { colazione: 70, pranzo: 80, cena: 75, spuntini: 40 },
+        biologicalAge: 28
     }
-  }, // <-- Ho chiuso qui l'oggetto 4 e aggiunto la virgola
+  },
    {
     id: 5,
     name: "Laura Bianchi",
@@ -90,14 +90,13 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-    // Ho aggiunto l'oggetto 'details' mancante
-    details: { 
-        satisfaction: 75, 
-        wellness: 70, 
-        fatMass: "45%", 
-        height: "1,60", 
-        adherence: { colazione: 80, pranzo: 85, cena: 80, spuntini: 70 }, 
-        biologicalAge: 68 
+    details: {
+        satisfaction: 75,
+        wellness: 70,
+        fatMass: "45%",
+        height: "1,60",
+        adherence: { colazione: 80, pranzo: 85, cena: 80, spuntini: 70 },
+        biologicalAge: 68
     }
   },
   {
@@ -109,14 +108,13 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-    // Ho aggiunto l'oggetto 'details' mancante
-    details: { 
-        satisfaction: 88, 
-        wellness: 90, 
-        fatMass: "30%", 
-        height: "1,68", 
-        adherence: { colazione: 95, pranzo: 95, cena: 95, spuntini: 80 }, 
-        biologicalAge: 23 
+    details: {
+        satisfaction: 88,
+        wellness: 90,
+        fatMass: "30%",
+        height: "1,68",
+        adherence: { colazione: 95, pranzo: 95, cena: 95, spuntini: 80 },
+        biologicalAge: 23
     }
   },
   {
@@ -128,14 +126,13 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-    // Ho aggiunto l'oggetto 'details' mancante
-    details: { 
-        satisfaction: 82, 
-        wellness: 85, 
-        fatMass: "31%", 
-        height: "1,72", 
-        adherence: { colazione: 90, pranzo: 90, cena: 85, spuntini: 75 }, 
-        biologicalAge: 22 
+    details: {
+        satisfaction: 82,
+        wellness: 85,
+        fatMass: "31%",
+        height: "1,72",
+        adherence: { colazione: 90, pranzo: 90, cena: 85, spuntini: 75 },
+        biologicalAge: 22
     }
   },
   {
@@ -147,30 +144,30 @@ const clients = [
     weightChange: "-3.2 kg",
     dietType: "Dieta mediterranea",
     nextVisit: "14 Luglio 2025",
-    // Ho aggiunto l'oggetto 'details' mancante
-    details: { 
-        satisfaction: 78, 
-        wellness: 75, 
-        fatMass: "38%", 
-        height: "1,80", 
-        adherence: { colazione: 85, pranzo: 80, cena: 80, spuntini: 65 }, 
-        biologicalAge: 28 
+    details: {
+        satisfaction: 78,
+        wellness: 75,
+        fatMass: "38%",
+        height: "1,80",
+        adherence: { colazione: 85, pranzo: 80, cena: 80, spuntini: 65 },
+        biologicalAge: 28
     }
-  } // <-- L'ultimo oggetto non ha la virgola finale
+  }
 ];
 
 
 // --- COMPONENTI ICONA ---
 const SearchIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>);
 const BackIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>);
+const BackIconSimple = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>);
 const ChatIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>);
 const ChevronDownIcon = () => (<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"></path></svg>);
 const FilterIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>);
-
+const UploadIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>);
 
 // --- COMPONENTE PRINCIPALE APP ---
 export default function App() {
-  const [activeSection, setActiveSection] = useState("client");
+  const [activeSection, setActiveSection] = useState("dieta"); // Impostato su 'dieta' per vederlo subito
   const user = { name: "Anna", avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d" };
 
   const tabs = [
@@ -179,13 +176,13 @@ export default function App() {
     { key: "consigli", label: "Consigli" },
     { key: "client", label: "Client management" },
   ];
-  
+
   return (
     <div className="min-h-screen bg-[#FFFBF0] font-sans text-[#333] p-6">
-      <nav className="flex justify-between items-center mb-8">
+      <header className="flex justify-between items-center mb-8">
         <div className="flex items-center gap-10">
-          <img src="/logo.png" alt="Ainana logo" className="h-8 w-auto" />
-          <div className="relative bg-[#fff4cc] rounded-full px-2 py-1 flex gap-2 shadow-md">
+           <img src="/logo.png" alt="Ainana logo" className="h-8 w-auto" />
+          <nav className="relative bg-[#fff4cc] rounded-full px-2 py-1 flex gap-2 shadow-md">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
@@ -200,7 +197,7 @@ export default function App() {
                 )}
               </button>
             ))}
-          </div>
+          </nav>
         </div>
         <div className="flex items-center gap-4">
             <SearchIcon />
@@ -208,21 +205,91 @@ export default function App() {
                 <img src={user.avatar} alt="Profilo" className="w-full h-full object-cover rounded-full" />
              </div>
         </div>
-      </nav>
-      
+      </header>
+
       <main>
         {activeSection === 'dashboard' && <DashboardView user={user} />}
+        {activeSection === 'dieta' && <DieteView />}
         {activeSection === 'client' && <ClientManagementView />}
+        {/* Aggiungi qui le altre sezioni come 'consigli' quando saranno create */}
       </main>
-      
+
       <div className="fixed bottom-6 right-6 bg-yellow-400 text-black font-semibold px-5 py-3 rounded-full shadow-lg flex items-center gap-3">
         <span>💬</span>
         <span>Hai 3 nuovi messaggi</span>
         <span className="font-extrabold">...</span>
       </div>
+      <Chatbot />
     </div>
   );
 }
+
+
+// =================================================================
+// --- NUOVA VISTA PER LA SEZIONE DIETE ---
+// =================================================================
+function DieteView() {
+    return (
+        <div className="relative">
+            <div className="flex justify-end mb-4">
+                <button className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-yellow-500 transition flex items-center gap-2">
+                    Vai alle diete
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                </button>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                {/* Colonna Sinistra */}
+                <div className="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm flex flex-col gap-6">
+                    <div className="flex flex-col items-center justify-center bg-[#FFFBF0] rounded-xl p-6">
+                        <UploadIcon />
+                    </div>
+                    <form className="space-y-4">
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="Nome e cognome"
+                                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            />
+                        </div>
+                        <div>
+                           <input
+                                type="text"
+                                placeholder="Altro..."
+                                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            />
+                        </div>
+                        <button type="submit" className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition-colors shadow-md">
+                            Aggiungi
+                        </button>
+                    </form>
+                </div>
+
+                {/* Colonna Destra */}
+                <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm h-[500px] flex flex-col items-center justify-center gap-4">
+                     <button className="w-2/3 max-w-sm bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md">
+                        Carica dieta (pdf)
+                    </button>
+                    <button className="w-2/3 max-w-sm bg-white border-2 border-yellow-400 text-yellow-500 font-bold py-3 px-6 rounded-lg hover:bg-yellow-50 transition-colors">
+                        Template
+                    </button>
+                </div>
+            </div>
+
+            {/* Footer con pulsanti */}
+             <div className="mt-8 flex justify-between items-center">
+                <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-yellow-200 px-4 py-2 rounded-lg shadow-sm border border-yellow-300 hover:bg-yellow-300">
+                    <BackIconSimple />
+                    Indietro
+                </button>
+                <div className="w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-orange-500">
+                   {/* Icona opzionale, es. un + o un'altra icona di azione */}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 
 // =================================================================
 // --- VISTA GESTIONE CLIENTI ---
@@ -234,12 +301,12 @@ function ClientManagementView() {
     if (selectedClient) {
         return <ClientDetailView client={selectedClient} onBack={() => setSelectedClient(null)} />
     }
-    
-    const filteredClients = clients.filter(client => 
+
+    const filteredClients = clients.filter(client =>
         client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         client.location.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    
+
     return (
         <div>
             <div className="flex justify-end mb-6">
@@ -247,7 +314,7 @@ function ClientManagementView() {
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <SearchIcon />
                     </div>
-                    <input 
+                    <input
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -293,7 +360,7 @@ function AdherenceItem({ meal, value, isOpen, onClick }) {
             <div onClick={onClick} className="flex justify-between items-center text-sm mb-1 cursor-pointer p-2 rounded-lg hover:bg-gray-50">
                 <span className="font-semibold capitalize">{meal}</span>
                 <span className="text-gray-500 flex items-center gap-2">
-                    {value}% 
+                    {value}%
                     <span className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
                         <ChevronDownIcon />
                     </span>
@@ -319,7 +386,7 @@ function AdherenceItem({ meal, value, isOpen, onClick }) {
 }
 
 // =================================================================
-// --- COMPONENTE GAUGE CHART (LEGGERMENTE RIMPICCIOLITO) ---
+// --- COMPONENTE GAUGE CHART ---
 // =================================================================
 function GaugeChart({ value, color, label }) {
   const data = [{ name: 'value', value: value }, { name: 'remaining', value: 100 - value }];
@@ -343,7 +410,7 @@ function GaugeChart({ value, color, label }) {
 
 
 // =================================================================
-// --- VISTA DETTAGLIO CLIENTE (CON LAYOUT PROFILO AGGIORNATO) ---
+// --- VISTA DETTAGLIO CLIENTE ---
 // =================================================================
 function ClientDetailView({ client, onBack }) {
   const weightData = [
@@ -351,7 +418,7 @@ function ClientDetailView({ client, onBack }) {
       { name: 'Apr', kg: -3 }, { name: 'Mag', kg: -4 }, { name: 'Giu', kg: -3.8 },
       { name: 'Lug', kg: -3.2 }, { name: 'Ago', kg: -2.5 },
   ];
-  
+
   const [openMeal, setOpenMeal] = useState('spuntini');
 
   const handleMealClick = (meal) => {
@@ -371,16 +438,12 @@ function ClientDetailView({ client, onBack }) {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-              
+
               {/* --- COLONNA SINISTRA --- */}
               <div className="flex flex-col gap-6">
-                  {/* Card Profilo Dettagliata - AGGIORNATA CON LAYOUT FLEXBOX */}
                   <div className="bg-white rounded-2xl p-6 shadow-sm">
                       <div className="flex items-start gap-5">
-                          {/* Avatar a sinistra */}
                           <img src={client.avatar} alt={client.name} className="w-24 h-24 rounded-full object-cover flex-shrink-0" />
-                          
-                          {/* Blocco info a destra */}
                           <div className="flex-grow">
                               <h2 className="text-2xl font-bold text-left">{client.name}</h2>
                               <p className="text-gray-500 text-left mb-4">{client.age} anni - {client.location}</p>
@@ -393,7 +456,6 @@ function ClientDetailView({ client, onBack }) {
                               </div>
                           </div>
                       </div>
-                      {/* Pulsante chat in basso a destra */}
                       <div className="flex justify-end mt-4">
                           <button className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 shadow-md">
                              <ChatIcon />
@@ -401,7 +463,6 @@ function ClientDetailView({ client, onBack }) {
                       </div>
                   </div>
 
-                  {/* Contenitore per Soddisfazione e Benessere affiancati */}
                   <div className="grid grid-cols-2 gap-6">
                       <div className="bg-white rounded-2xl p-4 shadow-sm text-center">
                           <h3 className="font-bold mb-2 text-sm">Soddisfazione</h3>
@@ -418,8 +479,7 @@ function ClientDetailView({ client, onBack }) {
                           </div>
                       </div>
                   </div>
-                   
-                  {/* Card Biomarcatori */}
+
                    <div className="bg-white rounded-2xl p-6 shadow-sm">
                       <h3 className="font-bold mb-4">Biomarcatori</h3>
                        <div className="space-y-4">
@@ -437,7 +497,6 @@ function ClientDetailView({ client, onBack }) {
 
               {/* --- COLONNA DESTRA --- */}
               <div className="flex flex-col gap-6">
-                  {/* Card Grafico Peso */}
                   <div className="bg-white rounded-2xl p-6 shadow-sm">
                       <h3 className="font-bold mb-2">Andamento peso corporeo</h3>
                       <ResponsiveContainer width="100%" height={250}>
@@ -455,7 +514,6 @@ function ClientDetailView({ client, onBack }) {
                            </AreaChart>
                       </ResponsiveContainer>
                   </div>
-                  {/* Card Aderenza Pasti */}
                    <div className="bg-white rounded-2xl p-6 shadow-sm">
                       <h3 className="font-bold mb-4">Aderenza ai pasti</h3>
                       <div className="space-y-2">
@@ -470,7 +528,6 @@ function ClientDetailView({ client, onBack }) {
                           ))}
                       </div>
                    </div>
-                   {/* Card Età Biologica */}
                    <div className="bg-white rounded-2xl p-6 shadow-sm">
                       <h3 className="font-bold mb-4">Età biologica</h3>
                       <div className="space-y-3">
@@ -492,13 +549,9 @@ function ClientDetailView({ client, onBack }) {
 }
 
 // =================================================================
-// --- VISTA DASHBOARD COMPLETA (CORRETTA E VERIFICATA) ---
-// =================================================================
-// =================================================================
-// --- VISTA DASHBOARD (PULITA E CORRETTA) ---
+// --- VISTA DASHBOARD ---
 // =================================================================
 function DashboardView({ user }) {
-  // Stati e funzioni del calendario
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [appointments, setAppointments] = useState({[new Date().toDateString()]: ["10:00: prima visita Mario Rossi"]});
   const [newAppt, setNewAppt] = useState("");
@@ -506,14 +559,14 @@ function DashboardView({ user }) {
 
   function getWeekDays(baseDate = new Date(), offset = 0) {
     const start = new Date(baseDate);
-    start.setDate(start.getDate() + offset * 7); 
+    start.setDate(start.getDate() + offset * 7);
     const dayOfWeek = start.getDay();
-    const diff = start.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); 
+    const diff = start.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
     const monday = new Date(start.setDate(diff));
     const days = [];
     for (let i = 0; i < 7; i++) {
         const d = new Date(monday);
-        d.setDate(monday.getDate() + i); 
+        d.setDate(monday.getDate() + i);
         days.push({
             label: d.toLocaleDateString("it-IT", { weekday: "short" }),
             fullDate: d,
@@ -521,11 +574,10 @@ function DashboardView({ user }) {
     }
     return days;
   }
-  
+
   const weekDays = getWeekDays(new Date(), weekOffset);
   const currentMonthYear = weekDays[0].fullDate.toLocaleDateString("it-IT", { month: "long", year: "numeric" });
-  
-  // Dati dei grafici
+
   const ageData = [{ group: '13-18', value: 30 }, { group: '19-25', value: 80 }, { group: '26-30', value: 50 }, { group: '31-40', value: 70 }, { group: '<40', value: 40 }];
   const visitsData = Array.from({ length: 14 }, (_, i) => ({ day: `G${i + 1}`, prime: Math.floor(Math.random() * 50 + 50), check: Math.floor(Math.random() * 50) }));
   const pieData = [{ name: 'Empatico', value: 400 }, { name: 'Altri', value: 400 }];
@@ -559,7 +611,7 @@ function DashboardView({ user }) {
                 {weekDays.map(({ label, fullDate }) => {
                     const isActive = selectedDate.toDateString() === fullDate.toDateString();
                     return (
-                        <button 
+                        <button
                             key={fullDate.toISOString()}
                             onClick={() => setSelectedDate(fullDate)}
                             className={`text-center p-1 rounded-lg w-full transition-colors ${
@@ -573,7 +625,7 @@ function DashboardView({ user }) {
                 })}
             </div>
           </div>
-          
+
           <div>
               {(appointments[selectedDate.toDateString()] || []).map((appt, i) => (
                   <div key={i} className="flex items-center justify-between gap-4 text-sm mb-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
@@ -586,7 +638,7 @@ function DashboardView({ user }) {
               </form>
           </div>
         </div>
-        
+
         <div className="bg-white rounded-2xl p-4 shadow-sm flex flex-col gap-4">
           <h3 className="font-bold px-2">Ultime ricette caricate</h3>
           <div className="bg-white p-2 rounded-lg flex items-center gap-3">
@@ -664,13 +716,3 @@ function DashboardView({ user }) {
     </div>
   )
 }
-function App() {
-  return (
-    <div>
-      {/* Tutto il tuo sito */}
-      <Chatbot />
-    </div>
-  );
-}
-
-export default App;
