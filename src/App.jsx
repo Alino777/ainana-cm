@@ -181,8 +181,8 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FFFBF0] font-sans text-[#333] p-6">
       <header className="flex justify-between items-center mb-8">
-        {/* --- Sezione Sinistra e Centrale della Navigazione --- */}
-        <div className="flex items-center gap-4">
+        {/* --- Sezione Sinistra della Navigazione --- */}
+        <div className="flex items-center gap-10">
           <img src="/logo.png" alt="Ainana logo" className="h-8 w-auto" />
           <nav className="relative bg-[#fff4cc] rounded-full px-2 py-1 flex gap-2 shadow-md">
             {tabs.map((tab) => (
@@ -200,17 +200,18 @@ export default function App() {
               </button>
             ))}
           </nav>
-          {/* --- NUOVO PULSANTE CHATBOT --- */}
-          <button
-              onClick={() => console.log("Chatbot clicked!")}
-              className="font-semibold text-black px-4 py-2 rounded-full shadow-md flex items-center gap-2 bg-white hover:bg-gray-100 transition-colors"
-          >
-              Chatbot <span role="img" aria-label="robot">🤖</span>
-          </button>
         </div>
 
-        {/* --- Sezione Destra della Navigazione --- */}
+        {/* --- Sezione Destra della Navigazione (CON PULSANTI AGGIORNATI) --- */}
         <div className="flex items-center gap-4">
+            {/* --- PULSANTE CHATBOT (SPOSTATO E COLORATO) --- */}
+            <button
+              onClick={() => console.log("Chatbot clicked!")}
+              className="font-semibold text-black px-4 py-2 rounded-full shadow-sm flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 transition-colors"
+            >
+                Chatbot <span role="img" aria-label="robot">🤖</span>
+            </button>
+
             <button className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-yellow-500 transition flex items-center gap-2">
                 Vai alle diete
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
