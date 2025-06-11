@@ -202,14 +202,16 @@ export default function App() {
           </nav>
         </div>
 
-        {/* --- Sezione Destra della Navigazione (CON PULSANTI AGGIORNATI) --- */}
+        {/* --- Sezione Destra della Navigazione --- */}
         <div className="flex items-center gap-4">
-            {/* --- PULSANTE CHATBOT (SPOSTATO E COLORATO) --- */}
+            {/* --- PULSANTE CHATBOT (AGGIORNATO CON IMMAGINE E LINK) --- */}
             <button
-              onClick={() => console.log("Chatbot clicked!")}
+              onClick={() => window.open('https://nanabot2.vercel.app/', '_blank')}
               className="font-semibold text-black px-4 py-2 rounded-full shadow-sm flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 transition-colors"
             >
-                Chatbot <span role="img" aria-label="robot">🤖</span>
+                Chatbot 
+                {/* NOTA: Sostituisci "/robot-icon.png" con il percorso corretto della tua immagine */}
+                <img src="/robot-icon.png" alt="Chatbot icon" className="w-5 h-5" />
             </button>
 
             <button className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-yellow-500 transition flex items-center gap-2">
@@ -223,7 +225,6 @@ export default function App() {
         {activeSection === 'dashboard' && <DashboardView user={user} />}
         {activeSection === 'dieta' && <DieteView />}
         {activeSection === 'client' && <ClientManagementView />}
-        {/* Aggiungi qui le altre sezioni come 'consigli' quando saranno create */}
       </main>
 
       <div className="fixed bottom-6 right-6 bg-yellow-400 text-black font-semibold px-5 py-3 rounded-full shadow-lg flex items-center gap-3">
@@ -238,7 +239,7 @@ export default function App() {
 
 
 // =================================================================
-// --- VISTA PER LA SEZIONE DIETE (AGGIORNATA) ---
+// --- VISTA PER LA SEZIONE DIETE ---
 // =================================================================
 function DieteView() {
     return (
@@ -364,7 +365,7 @@ function ClientCard({ client, onClick }) {
 }
 
 // =================================================================
-// --- COMPONENTE PER L'ACCORDION DEI PASTI ---
+// --- COMPONENTI RESTANTI (INVARIATI) ---
 // =================================================================
 function AdherenceItem({ meal, value, isOpen, onClick }) {
     return (
@@ -397,9 +398,6 @@ function AdherenceItem({ meal, value, isOpen, onClick }) {
     );
 }
 
-// =================================================================
-// --- COMPONENTE GAUGE CHART ---
-// =================================================================
 function GaugeChart({ value, color, label }) {
   const data = [{ name: 'value', value: value }, { name: 'remaining', value: 100 - value }];
   return (
@@ -420,10 +418,6 @@ function GaugeChart({ value, color, label }) {
   );
 }
 
-
-// =================================================================
-// --- VISTA DETTAGLIO CLIENTE ---
-// =================================================================
 function ClientDetailView({ client, onBack }) {
   const weightData = [
       { name: 'Gen', kg: 0 }, { name: 'Feb', kg: -1.5 }, { name: 'Mar', kg: -2.2 },
@@ -560,9 +554,6 @@ function ClientDetailView({ client, onBack }) {
   )
 }
 
-// =================================================================
-// --- VISTA DASHBOARD ---
-// =================================================================
 function DashboardView({ user }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [appointments, setAppointments] = useState({[new Date().toDateString()]: ["10:00: prima visita Mario Rossi"]});
@@ -598,7 +589,6 @@ function DashboardView({ user }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-      {/* Colonna Sinistra */}
       <div className="lg:col-span-1 flex flex-col gap-6">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-yellow-200 overflow-hidden shadow-inner">
@@ -609,7 +599,6 @@ function DashboardView({ user }) {
             <span>bentornata!</span>
           </div>
         </div>
-
         <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col gap-6">
           <div>
             <div className="flex justify-between items-center mb-4">
@@ -637,7 +626,6 @@ function DashboardView({ user }) {
                 })}
             </div>
           </div>
-
           <div>
               {(appointments[selectedDate.toDateString()] || []).map((appt, i) => (
                   <div key={i} className="flex items-center justify-between gap-4 text-sm mb-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
@@ -650,7 +638,6 @@ function DashboardView({ user }) {
               </form>
           </div>
         </div>
-
         <div className="bg-white rounded-2xl p-4 shadow-sm flex flex-col gap-4">
           <h3 className="font-bold px-2">Ultime ricette caricate</h3>
           <div className="bg-white p-2 rounded-lg flex items-center gap-3">
@@ -670,8 +657,6 @@ function DashboardView({ user }) {
           <button className="bg-yellow-400 text-black font-semibold px-4 py-3 rounded-lg mt-2 w-full shadow-md hover:bg-yellow-500 transition-all">Vai alle ricette</button>
         </div>
       </div>
-
-      {/* Colonna Destra */}
       <div className="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm flex flex-col gap-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-[#FFF9E6] rounded-2xl p-4 flex items-center gap-4">
@@ -702,7 +687,6 @@ function DashboardView({ user }) {
               </div>
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="rounded-2xl p-4 border border-gray-100">
             <h3 className="font-bold mb-2">Media età</h3>
