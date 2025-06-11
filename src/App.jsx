@@ -165,6 +165,7 @@ const ChevronDownIcon = () => (<svg className="w-4 h-4" fill="none" stroke="curr
 const FilterIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>);
 const UploadIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>);
 
+
 // --- COMPONENTE PRINCIPALE APP ---
 export default function App() {
   const [activeSection, setActiveSection] = useState("dieta"); // Impostato su 'dieta' per vederlo subito
@@ -180,8 +181,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FFFBF0] font-sans text-[#333] p-6">
       <header className="flex justify-between items-center mb-8">
-        <div className="flex items-center gap-10">
-           <img src="/logo.png" alt="Ainana logo" className="h-8 w-auto" />
+        {/* --- Sezione Sinistra e Centrale della Navigazione --- */}
+        <div className="flex items-center gap-4">
+          <img src="/logo.png" alt="Ainana logo" className="h-8 w-auto" />
           <nav className="relative bg-[#fff4cc] rounded-full px-2 py-1 flex gap-2 shadow-md">
             {tabs.map((tab) => (
               <button
@@ -198,12 +200,21 @@ export default function App() {
               </button>
             ))}
           </nav>
+          {/* --- NUOVO PULSANTE CHATBOT --- */}
+          <button
+              onClick={() => console.log("Chatbot clicked!")}
+              className="font-semibold text-black px-4 py-2 rounded-full shadow-md flex items-center gap-2 bg-white hover:bg-gray-100 transition-colors"
+          >
+              Chatbot <span role="img" aria-label="robot">🤖</span>
+          </button>
         </div>
+
+        {/* --- Sezione Destra della Navigazione --- */}
         <div className="flex items-center gap-4">
-            <SearchIcon />
-             <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
-                <img src={user.avatar} alt="Profilo" className="w-full h-full object-cover rounded-full" />
-             </div>
+            <button className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-yellow-500 transition flex items-center gap-2">
+                Vai alle diete
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </button>
         </div>
       </header>
 
@@ -226,70 +237,70 @@ export default function App() {
 
 
 // =================================================================
-// --- NUOVA VISTA PER LA SEZIONE DIETE ---
+// --- VISTA PER LA SEZIONE DIETE (AGGIORNATA) ---
 // =================================================================
 function DieteView() {
     return (
         <div className="relative">
-            <div className="flex justify-end mb-4">
-                <button className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-yellow-500 transition flex items-center gap-2">
-                    Vai alle diete
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-                </button>
-            </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                 {/* Colonna Sinistra */}
-                <div className="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm flex flex-col gap-6">
-                    <div className="flex flex-col items-center justify-center bg-[#FFFBF0] rounded-xl p-6">
-                        <UploadIcon />
+                <div className="lg:col-span-1 flex flex-col gap-4">
+                    <p className="font-semibold text-gray-700">Step 1: aggiungi un nuovo profilo paziente</p>
+                    <div className="bg-white p-6 rounded-2xl shadow-sm flex flex-col gap-6">
+                        <div className="flex flex-col items-center justify-center bg-[#FFFBF0] rounded-xl p-6">
+                            <UploadIcon />
+                        </div>
+                        <form className="space-y-4">
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Nome e cognome"
+                                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                />
+                            </div>
+                            <div>
+                               <input
+                                    type="text"
+                                    placeholder="Altro..."
+                                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                />
+                            </div>
+                            <button type="submit" className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition-colors shadow-md">
+                                Aggiungi
+                            </button>
+                        </form>
                     </div>
-                    <form className="space-y-4">
-                        <div>
-                            <input
-                                type="text"
-                                placeholder="Nome e cognome"
-                                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                            />
-                        </div>
-                        <div>
-                           <input
-                                type="text"
-                                placeholder="Altro..."
-                                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                            />
-                        </div>
-                        <button type="submit" className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition-colors shadow-md">
-                            Aggiungi
-                        </button>
-                    </form>
                 </div>
 
                 {/* Colonna Destra */}
-                <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm h-[500px] flex flex-col items-center justify-center gap-4">
-                     <button className="w-2/3 max-w-sm bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md">
-                        Carica dieta (pdf)
-                    </button>
-                    <button className="w-2/3 max-w-sm bg-white border-2 border-yellow-400 text-yellow-500 font-bold py-3 px-6 rounded-lg hover:bg-yellow-50 transition-colors">
-                        Template
-                    </button>
+                <div className="lg:col-span-2 flex flex-col gap-4">
+                    <p className="font-semibold text-gray-700">Step 2: carica una nuova dieta</p>
+                    <div className="relative border-2 border-dashed border-gray-300 bg-white rounded-2xl h-[500px] flex flex-col items-center justify-center gap-4 p-6">
+                        <div className="flex flex-col items-center justify-center text-center">
+                             <UploadIcon />
+                             <p className="mt-4 font-semibold text-gray-600">Trascina qui</p>
+                             <p className="text-sm text-gray-400 my-2">o</p>
+                        </div>
+                         <button className="w-2/3 max-w-xs bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md">
+                            Carica dieta (pdf)
+                        </button>
+                        <div className="absolute bottom-6 right-6 w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-orange-500">
+                           <ChatIcon />
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* Footer con pulsanti */}
+            {/* Footer con pulsante Indietro */}
              <div className="mt-8 flex justify-between items-center">
                 <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-yellow-200 px-4 py-2 rounded-lg shadow-sm border border-yellow-300 hover:bg-yellow-300">
                     <BackIconSimple />
                     Indietro
                 </button>
-                <div className="w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-orange-500">
-                   {/* Icona opzionale, es. un + o un'altra icona di azione */}
-                </div>
             </div>
         </div>
     );
 }
-
 
 // =================================================================
 // --- VISTA GESTIONE CLIENTI ---
