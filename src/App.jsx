@@ -206,7 +206,7 @@ export default function App() {
         <div className="flex items-center gap-4">
             {/* --- PULSANTE CHATBOT (AGGIORNATO CON IMMAGINE E LINK) --- */}
             <button
-              onClick={() => window.open('https://nanabot2.vercel.app/', '_blank')}
+              onClick={() => window.open('https://nanabot3.vercel.app/', '_blank')}
               className="font-semibold text-black px-4 py-2 rounded-full shadow-sm flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 transition-colors"
             >
                 Chatbot 
