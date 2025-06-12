@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react"; // <-- NOTA: Ho aggiunto useRef
 import { motion } from "framer-motion";
 import 'react-calendar/dist/Calendar.css';
 import {
@@ -7,6 +7,7 @@ import {
 } from 'recharts';
 import Chatbot from './components/Chatbot';
 
+// ... (tutto il resto del codice dei clienti e delle icone rimane invariato) ...
 // --- DATI DI ESEMPIO PER I CLIENTI ---
 const clients = [
   {
@@ -168,7 +169,7 @@ const UploadIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" className="h-8
 
 // --- COMPONENTE PRINCIPALE APP ---
 export default function App() {
-  const [activeSection, setActiveSection] = useState("dieta"); // Impostato su 'dieta' per vederlo subito
+  const [activeSection, setActiveSection] = useState("dieta");
   const user = { name: "Anna", avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d" };
 
   const tabs = [
@@ -181,7 +182,6 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FFFBF0] font-sans text-[#333] p-6">
       <header className="flex justify-between items-center mb-8">
-        {/* --- Sezione Sinistra della Navigazione --- */}
         <div className="flex items-center gap-10">
           <img src="/logo.png" alt="Ainana logo" className="h-8 w-auto" />
           <nav className="relative bg-[#fff4cc] rounded-full px-2 py-1 flex gap-2 shadow-md">
@@ -201,32 +201,25 @@ export default function App() {
             ))}
           </nav>
         </div>
-
-        {/* --- Sezione Destra della Navigazione --- */}
         <div className="flex items-center gap-4">
-            {/* --- PULSANTE CHATBOT (AGGIORNATO CON IMMAGINE E LINK) --- */}
             <button
-              onClick={() => window.open('https://nanabot3.vercel.app/', '_blank')}
+              onClick={() => window.open('https://nanabot2.vercel.app/', '_blank')}
               className="font-semibold text-black px-4 py-2 rounded-full shadow-sm flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 transition-colors"
             >
                 Chatbot 
-                {/* NOTA: Sostituisci "/robot-icon.png" con il percorso corretto della tua immagine */}
                 <img src="/robot-icon.png" alt="Chatbot icon" className="w-5 h-5" />
             </button>
-
             <button className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-yellow-500 transition flex items-center gap-2">
                 Vai alle diete
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
             </button>
         </div>
       </header>
-
       <main>
         {activeSection === 'dashboard' && <DashboardView user={user} />}
         {activeSection === 'dieta' && <DieteView />}
         {activeSection === 'client' && <ClientManagementView />}
       </main>
-
       <div className="fixed bottom-6 right-6 bg-yellow-400 text-black font-semibold px-5 py-3 rounded-full shadow-lg flex items-center gap-3">
         <span>💬</span>
         <span>Hai 3 nuovi messaggi</span>
@@ -239,9 +232,32 @@ export default function App() {
 
 
 // =================================================================
-// --- VISTA PER LA SEZIONE DIETE ---
+// --- VISTA PER LA SEZIONE DIETE (AGGIORNATA PER UPLOAD) ---
 // =================================================================
 function DieteView() {
+    // 1. STATO PER MEMORIZZARE IL FILE E RIFERIMENTO ALL'INPUT NASCOSTO
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [isLoading, setIsLoading] = useState(false); // Stato per il caricamento
+    const fileInputRef = useRef(null);
+
+    // 2. FUNZIONE CHE SI ATTIVA QUANDO L'UTENTE SELEZIONA UN FILE
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setSelectedFile(file);
+            console.log("File selezionato:", file);
+            // In futuro, qui chiameremo la funzione per inviare il file al backend
+            // handleUpload(file); 
+        }
+    };
+
+    // 3. FUNZIONE PER "CLICCARE" SULL'INPUT FILE NASCOSTO
+    const handleUploadButtonClick = () => {
+        // Clicca programmaticamente sull'input file
+        fileInputRef.current.click();
+    };
+
+
     return (
         <div className="relative">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -277,15 +293,36 @@ function DieteView() {
                 {/* Colonna Destra */}
                 <div className="lg:col-span-2 flex flex-col gap-4">
                     <p className="font-semibold text-gray-700">Step 2: carica una nuova dieta</p>
-                    <div className="relative border-2 border-dashed border-gray-300 bg-white rounded-2xl h-[500px] flex flex-col items-center justify-center gap-4 p-6">
-                        <div className="flex flex-col items-center justify-center text-center">
+                    <div className="relative border-2 border-dashed border-gray-300 bg-white rounded-2xl h-[500px] flex flex-col items-center justify-center gap-4 p-6 text-center">
+                        <div className="flex flex-col items-center justify-center">
                              <UploadIcon />
                              <p className="mt-4 font-semibold text-gray-600">Trascina qui</p>
                              <p className="text-sm text-gray-400 my-2">o</p>
                         </div>
-                         <button className="w-2/3 max-w-xs bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md">
-                            Carica dieta (pdf)
+                        
+                        {/* 4. INPUT FILE NASCOSTO */}
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleFileChange}
+                            className="hidden"
+                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt" // Tipi di file accettati
+                        />
+
+                        {/* 5. IL PULSANTE VISIBILE CHE ATTIVA L'INPUT NASCOSTO */}
+                         <button 
+                            onClick={handleUploadButtonClick}
+                            className="w-2/3 max-w-xs bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md">
+                            {isLoading ? "Analisi in corso..." : "Carica un file"}
                         </button>
+
+                        {/* 6. MOSTRA IL NOME DEL FILE SELEZIONATO */}
+                        {selectedFile && !isLoading && (
+                            <p className="text-sm text-gray-600 mt-2">
+                                File scelto: <strong>{selectedFile.name}</strong>
+                            </p>
+                        )}
+                        
                         <div className="absolute bottom-6 right-6 w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-orange-500">
                            <ChatIcon />
                         </div>
@@ -293,8 +330,7 @@ function DieteView() {
                 </div>
             </div>
 
-            {/* Footer con pulsante Indietro */}
-             <div className="mt-8 flex justify-between items-center">
+            <div className="mt-8 flex justify-between items-center">
                 <button className="flex items-center gap-2 text-sm font-semibold text-gray-600 bg-yellow-200 px-4 py-2 rounded-lg shadow-sm border border-yellow-300 hover:bg-yellow-300">
                     <BackIconSimple />
                     Indietro
@@ -304,9 +340,8 @@ function DieteView() {
     );
 }
 
-// =================================================================
-// --- VISTA GESTIONE CLIENTI ---
-// =================================================================
+
+// ... (Tutto il resto del codice, ClientManagementView, DashboardView, etc., rimane invariato)
 function ClientManagementView() {
     const [selectedClient, setSelectedClient] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
@@ -364,9 +399,6 @@ function ClientCard({ client, onClick }) {
     )
 }
 
-// =================================================================
-// --- COMPONENTI RESTANTI (INVARIATI) ---
-// =================================================================
 function AdherenceItem({ meal, value, isOpen, onClick }) {
     return (
         <div>
